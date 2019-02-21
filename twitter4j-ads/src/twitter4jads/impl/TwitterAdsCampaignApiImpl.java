@@ -154,25 +154,19 @@ public class TwitterAdsCampaignApiImpl implements TwitterAdsCampaignApi {
         final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         final String startTime = String.valueOf(df.format(campaign.getStartTime()));
 
-        final List<HttpParameter> params = new ArrayList<>();
-
-        final Long totalBudgetAmountLocalMicro = campaign.getTotalBudgetInMicro();
+        TwitterAdUtil.ensureNotNull(campaign.getDailyBudgetInMicro(), "Daily Budget Amount");
         final Long dailyBudgetAmountLocalMicro = campaign.getDailyBudgetInMicro();
 
+        final List<HttpParameter> params = new ArrayList<>();
+        final Long totalBudgetAmountLocalMicro = campaign.getTotalBudgetInMicro();
         if (totalBudgetAmountLocalMicro != null) {
             params.add(new HttpParameter(PARAM_TOTAL_BUDGET_AMOUNT_LOCAL_MICRO, totalBudgetAmountLocalMicro));
-        } else {
-            TwitterAdUtil.ensureNotNull(campaign.getDailyBudgetInMicro(), "Daily Budget Amount");
-        }
-        if (dailyBudgetAmountLocalMicro != null) {
-            params.add(new HttpParameter(PARAM_DAILY_BUDGET_AMOUNT_LOCAL_MICRO, dailyBudgetAmountLocalMicro));
-        } else {
-            TwitterAdUtil.ensureNotNull(campaign.getTotalBudgetInMicro(), "Total Budget Amount");
         }
 
         params.add(new HttpParameter(PARAM_NAME, name));
         params.add(new HttpParameter(PARAM_FUNDING_INSTRUMENT_ID, fundingInstrumentId));
         params.add(new HttpParameter(PARAM_START_TIME, startTime));
+        params.add(new HttpParameter(PARAM_DAILY_BUDGET_AMOUNT_LOCAL_MICRO, dailyBudgetAmountLocalMicro));
 
         if (campaign.getEndTime() != null) {
             String endTime = String.valueOf(df.format(campaign.getEndTime()));
