@@ -1,27 +1,5 @@
 package twitter4jads.impl;
 
-import com.google.common.base.Optional;
-import com.google.gson.reflect.TypeToken;
-import twitter4jads.BaseAdsListResponse;
-import twitter4jads.BaseAdsListResponseIterable;
-import twitter4jads.BaseAdsResponse;
-import twitter4jads.TwitterAdsClient;
-import twitter4jads.api.TwitterAdsCampaignApi;
-import twitter4jads.internal.http.HttpParameter;
-import twitter4jads.internal.models4j.TwitterException;
-import twitter4jads.models.ads.Campaign;
-import twitter4jads.models.ads.EntityStatus;
-import twitter4jads.models.ads.HttpVerb;
-import twitter4jads.models.ads.sort.CampaignSortByField;
-import twitter4jads.util.TwitterAdUtil;
-
-import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import static twitter4jads.TwitterAdsConstants.PARAM_CAMPAIGN_IDS;
 import static twitter4jads.TwitterAdsConstants.PARAM_COUNT;
 import static twitter4jads.TwitterAdsConstants.PARAM_CURSOR;
@@ -40,6 +18,29 @@ import static twitter4jads.TwitterAdsConstants.PARAM_TOTAL_BUDGET_AMOUNT_LOCAL_M
 import static twitter4jads.TwitterAdsConstants.PARAM_WITH_DELETED;
 import static twitter4jads.TwitterAdsConstants.PATH_CAMPAIGN;
 import static twitter4jads.TwitterAdsConstants.PREFIX_ACCOUNTS_URI_4;
+
+import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.google.common.base.Optional;
+import com.google.gson.reflect.TypeToken;
+
+import twitter4jads.BaseAdsListResponse;
+import twitter4jads.BaseAdsListResponseIterable;
+import twitter4jads.BaseAdsResponse;
+import twitter4jads.TwitterAdsClient;
+import twitter4jads.api.TwitterAdsCampaignApi;
+import twitter4jads.internal.http.HttpParameter;
+import twitter4jads.internal.models4j.TwitterException;
+import twitter4jads.models.ads.Campaign;
+import twitter4jads.models.ads.EntityStatus;
+import twitter4jads.models.ads.HttpVerb;
+import twitter4jads.models.ads.sort.CampaignSortByField;
+import twitter4jads.util.TwitterAdUtil;
 
 /**
  * User: abhay
@@ -153,19 +154,25 @@ public class TwitterAdsCampaignApiImpl implements TwitterAdsCampaignApi {
         final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         final String startTime = String.valueOf(df.format(campaign.getStartTime()));
 
-        TwitterAdUtil.ensureNotNull(campaign.getDailyBudgetInMicro(), "Daily Budget Amount");
+        final List<HttpParameter> params = new ArrayList<>();
+
+        final Long totalBudgetAmountLocalMicro = campaign.getTotalBudgetInMicro();
         final Long dailyBudgetAmountLocalMicro = campaign.getDailyBudgetInMicro();
 
-        final List<HttpParameter> params = new ArrayList<>();
-        final Long totalBudgetAmountLocalMicro = campaign.getTotalBudgetInMicro();
         if (totalBudgetAmountLocalMicro != null) {
             params.add(new HttpParameter(PARAM_TOTAL_BUDGET_AMOUNT_LOCAL_MICRO, totalBudgetAmountLocalMicro));
+        } else {
+            TwitterAdUtil.ensureNotNull(campaign.getDailyBudgetInMicro(), "Daily Budget Amount");
+        }
+        if (dailyBudgetAmountLocalMicro != null) {
+            params.add(new HttpParameter(PARAM_DAILY_BUDGET_AMOUNT_LOCAL_MICRO, dailyBudgetAmountLocalMicro));
+        } else {
+            TwitterAdUtil.ensureNotNull(campaign.getTotalBudgetInMicro(), "Total Budget Amount");
         }
 
         params.add(new HttpParameter(PARAM_NAME, name));
         params.add(new HttpParameter(PARAM_FUNDING_INSTRUMENT_ID, fundingInstrumentId));
         params.add(new HttpParameter(PARAM_START_TIME, startTime));
-        params.add(new HttpParameter(PARAM_DAILY_BUDGET_AMOUNT_LOCAL_MICRO, dailyBudgetAmountLocalMicro));
 
         if (campaign.getEndTime() != null) {
             String endTime = String.valueOf(df.format(campaign.getEndTime()));
