@@ -23,7 +23,6 @@ import twitter4jads.auth.OAuthSupport;
 import twitter4jads.conf.Configuration;
 import twitter4jads.internal.http.HttpParameter;
 import twitter4jads.internal.http.HttpResponse;
-import twitter4jads.internal.logging.Logger;
 import twitter4jads.internal.models4j.TwitterAPIMonitor;
 import twitter4jads.internal.models4j.TwitterException;
 import twitter4jads.internal.models4j.TwitterImpl;
@@ -41,7 +40,6 @@ import twitter4jads.util.TwitterAdUtil;
  */
 public class TwitterAdsClient extends TwitterImpl implements OAuthSupport {
 
-    private static final Logger logger = Logger.getLogger(TwitterAdsClient.class);
     public static final String ADS_API_URL = "https://ads-api.twitter.com/";
     public static final Gson GSON_INSTANCE = new Gson();
 
@@ -255,8 +253,7 @@ public class TwitterAdsClient extends TwitterImpl implements OAuthSupport {
             try {
                 status = TwitterMediaLibraryStatus.valueOf(media.getMediaStatus());
             } catch (Exception eX) {
-                logger.error("Could not get MediaStatus of uploaded media. ", eX);
-                return media;
+                return null;
             }
 
             switch (status) {
