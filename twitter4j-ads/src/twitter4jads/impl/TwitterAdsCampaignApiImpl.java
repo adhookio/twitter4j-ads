@@ -224,9 +224,6 @@ public class TwitterAdsCampaignApiImpl implements TwitterAdsCampaignApi {
             params.add(new HttpParameter(PARAM_TOTAL_BUDGET_AMOUNT_LOCAL_MICRO, String.valueOf(totalBudgetAmountLocalMicro)));
         }
 
-        if (endTime != null && endTime.isPresent()) {
-            params.add(new HttpParameter(PARAM_END_TIME, String.valueOf(endTime)));
-        }
         //The Ones that cannot be changed to null below
         if (name != null && name.isPresent()) {
             params.add(new HttpParameter(PARAM_NAME, name.get()));
@@ -235,12 +232,10 @@ public class TwitterAdsCampaignApiImpl implements TwitterAdsCampaignApi {
             params.add(new HttpParameter(PARAM_DAILY_BUDGET_AMOUNT_LOCAL_MICRO, dailyBudgetAmountLocalMicro.get()));
         }
         if (startTime != null && startTime.isPresent()) {
-            String startTimeValue = String.valueOf(startTime.get());
-            params.add(new HttpParameter(PARAM_START_TIME, startTimeValue));
+            params.add(new HttpParameter(PARAM_START_TIME, startTime.get()));
         }
         if (endTime != null && endTime.isPresent()) {
-            String endTimeValue = String.valueOf(endTime.get());
-            params.add(new HttpParameter(PARAM_END_TIME, endTimeValue));
+            params.add(new HttpParameter(PARAM_END_TIME, endTime.get()));
         }
         if (status != null) {
             params.add(new HttpParameter(PARAM_ENTITY_STATUS, status.name()));
