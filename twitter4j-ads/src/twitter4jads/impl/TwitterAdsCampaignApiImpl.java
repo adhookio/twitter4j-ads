@@ -235,10 +235,12 @@ public class TwitterAdsCampaignApiImpl implements TwitterAdsCampaignApi {
             params.add(new HttpParameter(PARAM_DAILY_BUDGET_AMOUNT_LOCAL_MICRO, dailyBudgetAmountLocalMicro.get()));
         }
         if (startTime != null && startTime.isPresent()) {
-            params.add(new HttpParameter(PARAM_START_TIME, startTime.get()));
+            String startTimeValue = startTime.get();
+            params.add(new HttpParameter(PARAM_START_TIME, startTimeValue));
         }
         if (endTime != null && endTime.isPresent()) {
-            params.add(new HttpParameter(PARAM_END_TIME, endTime.get()));
+            String endTimeValue = endTime.get();
+            params.add(new HttpParameter(PARAM_END_TIME, endTimeValue));
         }
         if (status != null) {
             params.add(new HttpParameter(PARAM_ENTITY_STATUS, status.name()));
