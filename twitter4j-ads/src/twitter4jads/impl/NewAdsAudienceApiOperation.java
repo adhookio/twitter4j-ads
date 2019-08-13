@@ -3,8 +3,7 @@ package twitter4jads.impl;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Twitter V4 Audience API operation payload structure
- * User: mayankbhargava
+ * Twitter V5 Audience API operation payload structure User: mayankbhargava
  *
  * @date 25/11/18
  * @time 10:19 PM

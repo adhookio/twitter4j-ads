@@ -1,13 +1,13 @@
 package twitter4jads.impl;
 
-import com.google.gson.annotations.SerializedName;
-import twitter4jads.models.ads.audience.TailoredAudienceUserDetails;
-
 import java.util.Set;
 
+import com.google.gson.annotations.SerializedName;
+
+import twitter4jads.models.ads.audience.TailoredAudienceUserDetails;
+
 /**
- * Twitter V4 Audience API params structure
- * User: mayankbhargava
+ * Twitter V5 Audience API params structure User: mayankbhargava
  *
  * @date 25/11/18
  * @time 10:03 PM

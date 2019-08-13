@@ -1,7 +1,7 @@
 package twitter4jads;
 
 import static twitter4jads.TwitterAdsConstants.PATH_MEDIA_LIBRARY;
-import static twitter4jads.TwitterAdsConstants.PREFIX_ACCOUNTS_URI_4;
+import static twitter4jads.TwitterAdsConstants.PREFIX_ACCOUNTS_URI_5;
 import static twitter4jads.TwitterAdsConstants.SLASH;
 import static twitter4jads.TwitterAdsConstants.WAIT_INTERVAL;
 import static twitter4jads.models.media.TwitterMediaLibraryStatus.TRANSCODE_FAILED;
@@ -242,7 +242,7 @@ public class TwitterAdsClient extends TwitterImpl implements OAuthSupport {
     //https://twittercommunity.com/t/details-for-media-library-media-status/117756
     public TwitterLibraryMedia waitForMediaProcessing(String accountId, String mediaKey, long maxWaitTime) throws TwitterException {
         Long totalWaitTime = 0L;
-        String url = getBaseAdsAPIUrl() + PREFIX_ACCOUNTS_URI_4 + accountId + PATH_MEDIA_LIBRARY + SLASH + mediaKey;
+        String url = getBaseAdsAPIUrl() + PREFIX_ACCOUNTS_URI_5 + accountId + PATH_MEDIA_LIBRARY + SLASH + mediaKey;
 
         Type type = new TypeToken<BaseAdsResponse<TwitterLibraryMedia>>() {
         }.getType();

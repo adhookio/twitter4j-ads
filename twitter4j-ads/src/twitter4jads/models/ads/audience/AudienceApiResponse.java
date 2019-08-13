@@ -1,5 +1,8 @@
 package twitter4jads.models.ads.audience;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -7,16 +10,13 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+
 import twitter4jads.ErrorResponse;
 import twitter4jads.internal.models4j.RateLimitStatus;
 import twitter4jads.models.ads.RequestParameters;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
 /**
- * Twitter V4 Audience API response
- * User: mayankbhargava
+ * Twitter V5 Audience API response User: mayankbhargava
  *
  * @date 25/11/18
  * @time 9:32 PM

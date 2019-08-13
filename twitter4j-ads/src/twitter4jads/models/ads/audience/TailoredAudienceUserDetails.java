@@ -1,16 +1,13 @@
 package twitter4jads.models.ads.audience;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Objects;
 import java.util.Set;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
- * Twitter V4 Audience API user info
- * Denotes information for individual user
- * Add only hashed information
- * It is advisable to use TailoredAudienceUserDetailsBuilder
- * User: mayankbhargava
+ * Twitter V5 Audience API user info Denotes information for individual user Add only hashed information It is advisable
+ * to use TailoredAudienceUserDetailsBuilder User: mayankbhargava
  *
  * @date 25/11/18
  * @time 10:28 PM
