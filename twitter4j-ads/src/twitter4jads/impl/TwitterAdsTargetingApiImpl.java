@@ -26,6 +26,7 @@ import static twitter4jads.TwitterAdsConstants.PARAM_IGNORED_VALUES;
 import static twitter4jads.TwitterAdsConstants.PARAM_INTERESTS;
 import static twitter4jads.TwitterAdsConstants.PARAM_LANGUAGES;
 import static twitter4jads.TwitterAdsConstants.PARAM_LINE_ITEM_ID;
+import static twitter4jads.TwitterAdsConstants.PARAM_LINE_ITEM_IDS;
 import static twitter4jads.TwitterAdsConstants.PARAM_LOCATIONS;
 import static twitter4jads.TwitterAdsConstants.PARAM_LOCATION_TYPE;
 import static twitter4jads.TwitterAdsConstants.PARAM_NAME;
@@ -158,7 +159,8 @@ public class TwitterAdsTargetingApiImpl implements TwitterAdsTargetingApi {
 
         final List<HttpParameter> params = new ArrayList<>();
         if (TwitterAdUtil.isNotNullOrEmpty(lineItemId)) {
-            params.add(new HttpParameter(PARAM_LINE_ITEM_ID, lineItemId));
+            // TODO: Add support for multiple lineItem Ids as added in Twitter Ads API v5
+            params.add(new HttpParameter(PARAM_LINE_ITEM_IDS, lineItemId));
         }
         params.add(new HttpParameter(PARAM_WITH_DELETED, withDeleted));
 
