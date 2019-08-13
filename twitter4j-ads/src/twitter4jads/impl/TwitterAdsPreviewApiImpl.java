@@ -43,7 +43,7 @@ public class TwitterAdsPreviewApiImpl implements TwitterAdsPreviewApi {
                 validateAndGetParametersForUnpublishedPostPreview(text, asUserId, mediaIds, twitterPreviewTarget,
                         videoKey);
 
-        String baseUrl = twitterAdsClient.getBaseAdsAPIUrl() + TwitterAdsConstants.PREFIX_ACCOUNTS_URI_4 +
+        String baseUrl = twitterAdsClient.getBaseAdsAPIUrl() + TwitterAdsConstants.PREFIX_ACCOUNTS_URI_5 +
                 accountId + TwitterAdsConstants.TWEET_PATH_PREVIEW;
 
         Type type = new TypeToken<BaseAdsListResponse<TwitterCreativePreview>>() {
@@ -66,7 +66,7 @@ public class TwitterAdsPreviewApiImpl implements TwitterAdsPreviewApi {
             parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_PREVIEW_TARGET, twitterPreviewTarget.name()));
         }
 
-        String baseUrl = twitterAdsClient.getBaseAdsAPIUrl() + TwitterAdsConstants.PREFIX_ACCOUNTS_URI_4 +
+        String baseUrl = twitterAdsClient.getBaseAdsAPIUrl() + TwitterAdsConstants.PREFIX_ACCOUNTS_URI_5 +
                 accountId + TwitterAdsConstants.TWEET_PATH_PREVIEW + tweetId;
 
         Type type = new TypeToken<BaseAdsListResponse<TwitterCreativePreview>>() {
