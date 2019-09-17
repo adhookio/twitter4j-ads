@@ -15,6 +15,7 @@ import twitter4jads.api.TwitterAdsStatApi;
 import twitter4jads.api.TwitterAdsTargetingApi;
 import twitter4jads.api.TwitterAdsWebEventApi;
 import twitter4jads.api.TwitterCallToActionApi;
+import twitter4jads.api.TwitterDraftTweetApi;
 import twitter4jads.api.TwitterScheduledTweetApi;
 import twitter4jads.auth.Authorization;
 import twitter4jads.conf.Configuration;
@@ -33,6 +34,7 @@ import twitter4jads.impl.TwitterAdsStatApiImpl;
 import twitter4jads.impl.TwitterAdsTargetingApiImpl;
 import twitter4jads.impl.TwitterAdsWebEventApiImpl;
 import twitter4jads.impl.TwitterCallToActionApiImpl;
+import twitter4jads.impl.TwitterDraftTweetsApiImpl;
 import twitter4jads.impl.TwitterScheduledTweetsApiImpl;
 
 /**
@@ -60,6 +62,8 @@ public class TwitterAdsImpl implements TwitterAds {
     private final TwitterCallToActionApi callToActionApi;
     private final TwitterScheduledTweetApi scheduledTweetApi;
 
+    private final TwitterDraftTweetApi draftTweetApi;
+
     TwitterAdsImpl(Configuration conf, Authorization auth) {
         this.twitterAdsClient = new TwitterAdsClient(conf, auth);
         this.targetingApi = new TwitterAdsTargetingApiImpl(twitterAdsClient);
@@ -78,6 +82,7 @@ public class TwitterAdsImpl implements TwitterAds {
         this.adsPreviewApi = new TwitterAdsPreviewApiImpl(twitterAdsClient);
         this.callToActionApi = new TwitterCallToActionApiImpl(twitterAdsClient);
         this.scheduledTweetApi = new TwitterScheduledTweetsApiImpl(twitterAdsClient);
+        this.draftTweetApi = new TwitterDraftTweetsApiImpl(twitterAdsClient);
     }
 
     @Override
@@ -158,6 +163,11 @@ public class TwitterAdsImpl implements TwitterAds {
     @Override
     public TwitterScheduledTweetApi getScheduledTweetApi() {
         return scheduledTweetApi;
+    }
+
+    @Override
+    public TwitterDraftTweetApi getDraftTweetApi() {
+        return draftTweetApi;
     }
 
     public TwitterAdsMediaUploadApi getMediaUploadApi() {

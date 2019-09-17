@@ -15,6 +15,7 @@ import twitter4jads.api.TwitterAdsStatApi;
 import twitter4jads.api.TwitterAdsTargetingApi;
 import twitter4jads.api.TwitterAdsWebEventApi;
 import twitter4jads.api.TwitterCallToActionApi;
+import twitter4jads.api.TwitterDraftTweetApi;
 import twitter4jads.api.TwitterScheduledTweetApi;
 
 /**
@@ -55,6 +56,8 @@ public interface TwitterAds extends java.io.Serializable {
     TwitterAdsPreviewApi getPreviewApi();
 
     TwitterScheduledTweetApi getScheduledTweetApi();
+
+    TwitterDraftTweetApi getDraftTweetApi();
 
     TwitterAdsMediaUploadApi getMediaUploadApi();
 }

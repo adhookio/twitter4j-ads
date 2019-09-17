@@ -33,6 +33,8 @@ public interface TwitterAdsConstants {
     String PARAM_SCHEDULED_TWEET_ID = "scheduled_tweet_id";
     String PARAM_ACCOUNT_MEDIA_ID = "account_media_id";
     String PARAM_MEDIA_IDS = "media_ids";
+
+    String PARAM_MEDIA_KEYS = "media_keys";
     String PARAM_LANDING_URL = "landing_url";
     String PARAM_TV_MARKET_LOCALE = "tv_market_locale ";
     String PARAM_SCHEDULED_PROMOTED_TWEET_IDS = "scheduled_promoted_tweet_ids";
@@ -57,6 +59,8 @@ public interface TwitterAdsConstants {
     String PARAM_CREATIVE_TYPE = "creative_type";
     String PARAM_CURRENCY = "currency";
     String PARAM_TWEET_IDS = "tweet_ids";
+
+    String PARAM_TWEET_TYPE = "tweet_type";
     String PARAM_TWEET_ID = "tweet_id";
     String PARAM_USER_ID = "user_id";
     String PARAM_AS_USER_ID = "as_user_id";
@@ -292,6 +296,8 @@ public interface TwitterAdsConstants {
     String PATH_VIDEO_DM_CARDS = "/cards/video_direct_message/";
     String PATH_PROMOTED_TWEETS = "/promoted_tweets/";
     String PATH_SCHEDULED_TWEETS = "/scheduled_tweets/";
+
+    String PATH_DRAFT_TWEETS = "/draft_tweets/";
     String PATH_SCHEDULED_PROMOTED_TWEETS = "/scheduled_promoted_tweets/";
     String PATH_PROMOTED_ACCOUNTS = "/promoted_accounts/";
     String PARAM_ATTRIBUTABLE_USER_ID = "attributable_user_id";
@@ -389,7 +395,7 @@ public interface TwitterAdsConstants {
      * for Twitter preview
      */
 
-    String TWEET_PATH_PREVIEW = "/tweet/preview/";
+    String TWEET_PATH_PREVIEW = "/tweet_previews";
     String PARAM_PREVIEW_TARGET = "preview_target";
     String PARAM_TWEET_MODE = "tweet_mode";
 }

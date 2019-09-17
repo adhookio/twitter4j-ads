@@ -1,6 +1,6 @@
 package twitter4jads.impl;
 
-import static twitter4jads.models.ads.TwitterPreviewTarget.PUBLISHER_NETWORK;
+import static twitter4jads.TwitterAdsConstants.PARAM_ACCOUNT_ID;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -16,8 +16,8 @@ import twitter4jads.api.TwitterAdsPreviewApi;
 import twitter4jads.internal.http.HttpParameter;
 import twitter4jads.internal.http.HttpResponse;
 import twitter4jads.internal.models4j.TwitterException;
+import twitter4jads.models.ads.TweetType;
 import twitter4jads.models.ads.TwitterCreativePreview;
-import twitter4jads.models.ads.TwitterPreviewTarget;
 import twitter4jads.util.TwitterAdUtil;
 
 /**
@@ -34,14 +34,12 @@ public class TwitterAdsPreviewApiImpl implements TwitterAdsPreviewApi {
     }
 
     @Override
-    public BaseAdsListResponse<TwitterCreativePreview> getUnpublishedTweetPreview(String accountId, String text, String asUserId,
-                                                                                  List<String> mediaIds, String cardId,
-                                                                                  TwitterPreviewTarget twitterPreviewTarget, String videoKey)
+    public BaseAdsListResponse<TwitterCreativePreview> getPreviews(String accountId, List<String> tweetIds,
+            TweetType tweetType)
             throws TwitterException {
 
         List<HttpParameter> parameterList =
-                validateAndGetParametersForUnpublishedPostPreview(text, asUserId, mediaIds, twitterPreviewTarget,
-                        videoKey);
+                validateAndGetParametersForUnpublishedPostPreview(accountId, tweetIds, tweetType);
 
         String baseUrl = twitterAdsClient.getBaseAdsAPIUrl() + TwitterAdsConstants.PREFIX_ACCOUNTS_URI_5 +
                 accountId + TwitterAdsConstants.TWEET_PATH_PREVIEW;
@@ -57,55 +55,19 @@ public class TwitterAdsPreviewApiImpl implements TwitterAdsPreviewApi {
         }
     }
 
-    @Override
-    public BaseAdsListResponse<TwitterCreativePreview> getPublishedTweetPreview(String accountId, String tweetId,
-                                                                                TwitterPreviewTarget twitterPreviewTarget) throws TwitterException {
-        final List<HttpParameter> parameterList = Lists.newArrayList();
-
-        if (TwitterAdUtil.isNotNullOrEmpty(twitterPreviewTarget.name())) {
-            parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_PREVIEW_TARGET, twitterPreviewTarget.name()));
-        }
-
-        String baseUrl = twitterAdsClient.getBaseAdsAPIUrl() + TwitterAdsConstants.PREFIX_ACCOUNTS_URI_5 +
-                accountId + TwitterAdsConstants.TWEET_PATH_PREVIEW + tweetId;
-
-        Type type = new TypeToken<BaseAdsListResponse<TwitterCreativePreview>>() {
-        }.getType();
-        HttpResponse response = twitterAdsClient.getRequest(baseUrl, parameterList.toArray(new HttpParameter[parameterList.size()]));
-
-        try {
-            return TwitterAdUtil.constructBaseAdsListResponse(response, response.asString(), type);
-        } catch (IOException io) {
-            throw new TwitterException("Response for tweet preview failed from TwitterApi");
-        }
-    }
-
-    //-------------------------------------------------------------- PRIVATE METHODS-------------------------------------------------------------//
-
-    private List<HttpParameter> validateAndGetParametersForUnpublishedPostPreview(String text, String asUserId, List<String> mediaIds,
-            TwitterPreviewTarget twitterPreviewTarget, String videoId)
-        throws TwitterException {
-        final boolean isPreviewTargetPublisherNetwork = twitterPreviewTarget == PUBLISHER_NETWORK;
-        final String mediaIdsCsv = TwitterAdUtil.getCsv(mediaIds);
-        if (isPreviewTargetPublisherNetwork && !TwitterAdUtil.isNotNullOrEmpty(mediaIdsCsv)) {
-            throw new TwitterException("To preview an unpublished tweet, mediaIds is a required field when preview_target is " +
-                    PUBLISHER_NETWORK.name());
-        }
+    private List<HttpParameter> validateAndGetParametersForUnpublishedPostPreview(String accountId,
+            List<String> tweetIds, TweetType tweetType) {
+        final String tweetIdsCsv = TwitterAdUtil.getCsv(tweetIds);
 
         final List<HttpParameter> parameterList = Lists.newArrayList();
-        parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_TEXT, text));
 
-        if (TwitterAdUtil.isNotNullOrEmpty(asUserId)) {
-            parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_AS_USER_ID, asUserId));
+        parameterList.add(new HttpParameter(PARAM_ACCOUNT_ID, accountId));
+
+        if (TwitterAdUtil.isNotNullOrEmpty(tweetIdsCsv)) {
+            parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_TWEET_IDS, tweetIdsCsv));
         }
-        if (TwitterAdUtil.isNotNull(twitterPreviewTarget)) {
-            parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_PREVIEW_TARGET, twitterPreviewTarget.name()));
-        }
-        if (TwitterAdUtil.isNotNullOrEmpty(mediaIdsCsv)) {
-            parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_MEDIA_IDS, mediaIdsCsv));
-        }
-        if (TwitterAdUtil.isNotNullOrEmpty(videoId)) {
-            parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_VIDEO_ID, videoId));
+        if (tweetType != null) {
+            parameterList.add(new HttpParameter(TwitterAdsConstants.PARAM_TWEET_TYPE, tweetType.name()));
         }
 
         return parameterList;
