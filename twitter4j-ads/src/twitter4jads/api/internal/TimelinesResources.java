@@ -109,20 +109,6 @@ public interface TimelinesResources {
     ResponseList<Status> getUserTimeline(long userId, Paging paging) throws TwitterException;
 
     /**
-     * returns upto 200 most recent promotable-only-posts (https://dev.twitter.com/docs/api/advertising/1.1/statuses/scoped_timeline)
-     * Promotable only posts are like normal tweets except that they are not visible to the followers.
-     *
-     * {@link Status}.scopes.followers values is false for promotable posts
-     * For Normal tweets {@link Status}.scopes should be null or followers should be null/true
-     *
-     * @param userId the user whose promotable posts are to be fetched
-     * @param paging paging info
-     * @return
-     * @throws TwitterException
-     */
-    public ResponseList<Status> getScopedTimeLine(long userId, Paging paging) throws TwitterException;
-
-    /**
      * Returns the 20 most recent statuses posted from the authenticating user. It's also possible to request another user's timeline via the id parameter.<br>
      * This is the equivalent of the Web / page for your own user, or the profile page for a third party.<br>
      * For backwards compatibility reasons, retweets are stripped out of the user_timeline when calling in XML or JSON (they appear with 'RT' in RSS and Atom). If you'd like them included, you can merge them in from statuses retweeted_by_me.<br>

@@ -27,9 +27,6 @@ public class DraftTweet {
     @SerializedName("scheduled_status")
     private String scheduledStatus;
 
-    @SerializedName("media_ids")
-    private List<Long> mediaIds;
-
     @SerializedName("media_keys")
     private List<String> mediaKeys;
 
@@ -141,14 +138,6 @@ public class DraftTweet {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public List<Long> getMediaIds() {
-        return mediaIds;
-    }
-
-    public void setMediaIds(List<Long> mediaIds) {
-        this.mediaIds = mediaIds;
     }
 
     public Long getUserId() {

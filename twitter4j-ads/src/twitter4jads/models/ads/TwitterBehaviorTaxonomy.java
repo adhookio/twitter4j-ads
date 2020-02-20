@@ -1,8 +1,8 @@
 package twitter4jads.models.ads;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by abhishekanand on 11/03/15.
@@ -21,6 +21,16 @@ public class TwitterBehaviorTaxonomy extends TwitterEntity {
     @SerializedName("updated_at")
     private Date updatedAt;
 
+    @SerializedName("targeting_value")
+    private String targetingValue;
+
+    public String getTargetingValue() {
+        return targetingValue;
+    }
+
+    public void setTargetingValue(String targetingValue) {
+        this.targetingValue = targetingValue;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

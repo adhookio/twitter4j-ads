@@ -21,8 +21,8 @@ public class Devices extends TwitterEntity{
     @SerializedName("manufacturer")
     private String manufacturer;
 
-    @SerializedName("platform")
-    private String platform;
+    @SerializedName("os_type")
+    private String osType;
 
     public String getName() {
         return name;
@@ -56,11 +56,11 @@ public class Devices extends TwitterEntity{
         this.manufacturer = manufacturer;
     }
 
-    public String getPlatform() {
-        return platform;
+    public String getOsType() {
+        return osType;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public void setOsType(String osType) {
+        this.osType = osType;
     }
 }

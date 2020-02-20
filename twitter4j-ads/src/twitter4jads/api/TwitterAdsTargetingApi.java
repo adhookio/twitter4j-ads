@@ -1,16 +1,18 @@
 package twitter4jads.api;
 
+import java.util.List;
+
 import com.google.common.base.Optional;
+
 import twitter4jads.BaseAdsListResponseIterable;
 import twitter4jads.BaseAdsResponse;
 import twitter4jads.internal.models4j.TwitterException;
 import twitter4jads.models.LocationType;
 import twitter4jads.models.ads.AppStoreSearchType;
 import twitter4jads.models.ads.Conversations;
-import twitter4jads.models.ads.Devices;
 import twitter4jads.models.ads.IabCategory;
 import twitter4jads.models.ads.NewTwitterReachEstimate;
-import twitter4jads.models.ads.PlatformVersions;
+import twitter4jads.models.ads.OperatorType;
 import twitter4jads.models.ads.ProductType;
 import twitter4jads.models.ads.SuggestionType;
 import twitter4jads.models.ads.TargetingCriteria;
@@ -20,12 +22,9 @@ import twitter4jads.models.ads.TargetingType;
 import twitter4jads.models.ads.TwitterAppStore;
 import twitter4jads.models.ads.TwitterBehavior;
 import twitter4jads.models.ads.TwitterBehaviorTaxonomy;
-import twitter4jads.models.ads.audience.TailoredAudienceType;
 import twitter4jads.models.ads.tags.TwitterApplicationList;
 import twitter4jads.models.ads.targeting.TargetingParamRequest;
 import twitter4jads.models.ads.targeting.TargetingParamResponse;
-
-import java.util.List;
 
 /**
  * User: abhay
@@ -56,19 +55,18 @@ public interface TwitterAdsTargetingApi {
     BaseAdsResponse<TargetingCriteria> getTargetingCriteriaById(String accountId, String targetingId, boolean withDeleted) throws TwitterException;
 
     /**
-     * @param accountId                 The identifier for the leveraged account.
-     * @param lineItemId                The line item ID to create targeting criteria upon.
-     * @param targetingType             The type of targeting to be used with this targeting criteria.
-     * @param targetingValue            The targeting value being set.
-     * @param tailoredAudienceExpansion (optional) Whether or not to expand tailored audiences.
-     * @param tailoredAudienceType      (optional) The type of tailored audience being set.
+     * @param accountId The identifier for the leveraged account.
+     * @param lineItemId The line item ID to create targeting criteria upon.
+     * @param targetingType The type of targeting to be used with this targeting criteria.
+     * @param targetingValue The targeting value being set.
+     * @param operatorType The operator type
      * @return created targeting criteria
      * @throws TwitterException
-     * @see <a href="https://dev.twitter.com/ads/reference/post/accounts/%3Aaccount_id/targeting_criteria">https://dev.twitter.com/ads/reference/post/accounts/%3Aaccount_id/targeting_criteria</a>
+     * @see <a href=
+     * "https://dev.twitter.com/ads/reference/post/accounts/%3Aaccount_id/targeting_criteria">https://dev.twitter.com/ads/reference/post/accounts/%3Aaccount_id/targeting_criteria</a>
      */
     BaseAdsResponse<TargetingCriteria> createTargetingCriteria(String accountId, String lineItemId, TargetingType targetingType,
-                                                               String targetingValue, boolean tailoredAudienceExpansion,
-                                                               Optional<TailoredAudienceType> tailoredAudienceType)
+            String targetingValue, OperatorType operatorType)
             throws TwitterException;
 
     /**
@@ -161,25 +159,10 @@ public interface TwitterAdsTargetingApi {
     BaseAdsListResponseIterable<TargetingCriteria> getAllTargetingNetworkOperators(String q) throws TwitterException;
 
     /**
-     * @return all possible targeting platform versions to choose from
-     * @throws TwitterException
-     * @see <a href="https://dev.twitter.com/ads/reference/get/targeting_criteria/platform_versions">https://dev.twitter.com/ads/reference/get/targeting_criteria/platform_versions</a>
-     */
-    BaseAdsListResponseIterable<PlatformVersions> getAllTargetingPlatformVersions() throws TwitterException;
-
-    /**
      * @return all possible targeting conversations to choose from
      * @throws TwitterException
      */
     BaseAdsListResponseIterable<Conversations> getAllTargetingConversations() throws TwitterException;
-
-    /**
-     * @param q (optional) Search results for matching a specific device.
-     * @return all possible targeting devices to choose from
-     * @throws TwitterException
-     * @see <a href="https://dev.twitter.com/ads/reference/get/targeting_criteria/devices">https://dev.twitter.com/ads/reference/get/targeting_criteria/devices</a>
-     */
-    BaseAdsListResponseIterable<Devices> getAllTargetingDevices(String q) throws TwitterException;
 
     /**
      * @param tvMarketLocale (optional) Scope the results to a specific tv market locale.
@@ -232,18 +215,16 @@ public interface TwitterAdsTargetingApi {
                                                      Optional<Integer> count, List<String> ignoredValues) throws TwitterException;
 
     /**
-     * @param behaviorIds (optional) Scope the results to a set of behavior IDs.
      * @param count       (optional) Limit the number of results to the given count.
      * @param cursor      (optional) Specify a cursor to retrieve data from a specific page (function automatically handles paging upon iteration when you do not specify cursor value).
      * @return all the behaviors that can be targeted
      * @throws TwitterException
      * @see <a href="https://dev.twitter.com/ads/reference/get/targeting_criteria/behaviors">https://dev.twitter.com/ads/reference/get/targeting_criteria/behaviors</a>
      */
-    BaseAdsListResponseIterable<TwitterBehavior> getBehaviors(Optional<Integer> count, Optional<String> cursor, List<String> behaviorIds,
+    BaseAdsListResponseIterable<TwitterBehavior> getBehaviors(Optional<Integer> count, Optional<String> cursor,
                                                               Optional<String> countryCode) throws TwitterException;
 
     /**
-     * @param behaviorTaxonomyIds       (optional) List of behavior taxonomy identifiers by which to filter the response.
      * @param parentBehaviorTaxonomyIds (optional) List of behavior taxonomy identifiers of parent nodes in the tree structures. Specifying parents will only return children nodes of the taxonomy.
      * @param count                     (optional) Limit the number of results to the given count.
      * @param cursor                    (optional) Specify a cursor to retrieve data from a specific page (function automatically handles paging upon iteration when you do not specify cursor value).
@@ -251,8 +232,8 @@ public interface TwitterAdsTargetingApi {
      * @throws TwitterException
      * @see <a href="https://dev.twitter.com/ads/reference/get/targeting_criteria/behavior_taxonomies">https://dev.twitter.com/ads/reference/get/targeting_criteria/behavior_taxonomies</a>
      */
-    BaseAdsListResponseIterable<TwitterBehaviorTaxonomy> getBehaviorTaxonomy(List<String> behaviorTaxonomyIds,
-                                                                             List<String> parentBehaviorTaxonomyIds, Optional<Integer> count,
+    BaseAdsListResponseIterable<TwitterBehaviorTaxonomy> getBehaviorTaxonomy(List<String> parentBehaviorTaxonomyIds,
+            Optional<Integer> count,
                                                                              Optional<String> cursor) throws TwitterException;
 
     /**

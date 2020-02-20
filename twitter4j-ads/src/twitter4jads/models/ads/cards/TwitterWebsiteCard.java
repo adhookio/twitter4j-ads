@@ -13,11 +13,22 @@ public class TwitterWebsiteCard extends AbstractTwitterCard {
     @SerializedName("website_url")
     private String websiteUrl;
 
-    @SerializedName("image")
-    private String image;
+    @SerializedName("media_url")
+    private String mediaUrl;
 
     @SerializedName("image_data")
     private String imageData;
+
+    @SerializedName("media_key")
+    private String mediaKey;
+
+    public String getMediaKey() {
+        return mediaKey;
+    }
+
+    public void setMediaKey(String mediaKey) {
+        this.mediaKey = mediaKey;
+    }
 
     public String getWebsiteTitle() {
         return websiteTitle;
@@ -35,12 +46,12 @@ public class TwitterWebsiteCard extends AbstractTwitterCard {
         this.websiteUrl = websiteUrl;
     }
 
-    public String getImage() {
-        return image;
+    public String getMediaUrl() {
+        return mediaUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setMediaUrl(String mediaUrl) {
+        this.mediaUrl = mediaUrl;
     }
 
     public String getImageData() {

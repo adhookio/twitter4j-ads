@@ -25,6 +25,17 @@ public class TwitterBehavior extends TwitterEntity {
     @SerializedName("targetable_types")
     private String[] targetableTypes;
 
+    @SerializedName("targeting_value")
+    private String targetingValue;
+
+    public String getTargetingValue() {
+        return targetingValue;
+    }
+
+    public void setTargetingValue(String targetingValue) {
+        this.targetingValue = targetingValue;
+    }
+
     public int getAudienceSize() {
         return audienceSize;
     }

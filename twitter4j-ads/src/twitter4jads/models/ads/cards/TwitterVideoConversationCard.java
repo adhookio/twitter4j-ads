@@ -9,24 +9,24 @@ import com.google.gson.annotations.SerializedName;
  */
 public class TwitterVideoConversationCard extends AbstractConversationCard {
 
-    @SerializedName("video_url")
-    private String videoUrl;
+    @SerializedName("media_url")
+    private String mediaUrl;
 
     @SerializedName("content_duration_seconds")
     private String duration;
 
-    @SerializedName("video_poster_url")
-    private String thumbnailUrl;
+    @SerializedName("poster_media_url")
+    private String posterMediaUrl;
 
-    @SerializedName("video_content_id")
-    private String videoId;
+    @SerializedName("media_key")
+    private String mediaKey;
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getMediaUrl() {
+        return mediaUrl;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setMediaUrl(String mediaUrl) {
+        this.mediaUrl = mediaUrl;
     }
 
     public String getDuration() {
@@ -37,19 +37,19 @@ public class TwitterVideoConversationCard extends AbstractConversationCard {
         this.duration = duration;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
+    public String getPosterMediaUrl() {
+        return posterMediaUrl;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
+    public void setPosterMediaUrl(String posterMediaUrl) {
+        this.posterMediaUrl = posterMediaUrl;
     }
 
-    public String getVideoId() {
-        return videoId;
+    public String getMediaKey() {
+        return mediaKey;
     }
 
-    public void setVideoId(String videoId) {
-        this.videoId = videoId;
+    public void setMediaKey(String mediaKey) {
+        this.mediaKey = mediaKey;
     }
 }

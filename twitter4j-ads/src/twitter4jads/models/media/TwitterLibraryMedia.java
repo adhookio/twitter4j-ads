@@ -1,8 +1,8 @@
 package twitter4jads.models.media;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * User: abhishekanand
@@ -34,11 +34,11 @@ public class TwitterLibraryMedia {
     @SerializedName("media_status")
     private String mediaStatus;
 
-    @SerializedName("poster_image_url")
-    private String posterImageUrl;
+    @SerializedName("poster_media_url")
+    private String posterMediaUrl;
 
-    @SerializedName("poster_image_media_key")
-    private String posterImageMediaKey;
+    @SerializedName("poster_media_key")
+    private String posterMediaKey;
 
     @SerializedName("media_key")
     private String mediaKey;
@@ -157,20 +157,20 @@ public class TwitterLibraryMedia {
         this.name = name;
     }
 
-    public String getPosterImageMediaKey() {
-        return posterImageMediaKey;
+    public String getPosterMediaKey() {
+        return posterMediaKey;
     }
 
-    public void setPosterImageMediaKey(String posterImageMediaKey) {
-        this.posterImageMediaKey = posterImageMediaKey;
+    public void setPosterMediaKey(String posterMediaKey) {
+        this.posterMediaKey = posterMediaKey;
     }
 
-    public String getPosterImageUrl() {
-        return posterImageUrl;
+    public String getPosterMediaUrl() {
+        return posterMediaUrl;
     }
 
-    public void setPosterImageUrl(String posterImageUrl) {
-        this.posterImageUrl = posterImageUrl;
+    public void setPosterMediaUrl(String posterMediaUrl) {
+        this.posterMediaUrl = posterMediaUrl;
     }
 
     public String getTitle() {

@@ -12,20 +12,17 @@ public class TwitterVideoWebsiteCard extends AbstractTwitterCard {
     @SerializedName("title")
     private String title;
 
-    @SerializedName("video_content_id")
-    private String videoId;
+    @SerializedName("media_key")
+    private String mediaKey;
 
     @SerializedName("website_url")
     private String websiteUrl;
 
-    @SerializedName("video_url")
-    private String videoUrl;
+    @SerializedName("media_url")
+    private String mediaUrl;
 
-    @SerializedName("video_hls_url")
-    private String videoHlsUrl;
-
-    @SerializedName("video_poster_url")
-    private String videoPosterUrl;
+    @SerializedName("poster_media_url")
+    private String posterMediaUrl;
 
     public String getTitle() {
         return title;
@@ -35,12 +32,12 @@ public class TwitterVideoWebsiteCard extends AbstractTwitterCard {
         this.title = title;
     }
 
-    public String getVideoId() {
-        return videoId;
+    public String getMediaKey() {
+        return mediaKey;
     }
 
-    public void setVideoId(String videoId) {
-        this.videoId = videoId;
+    public void setMediaKey(String mediaKey) {
+        this.mediaKey = mediaKey;
     }
 
     public String getWebsiteUrl() {
@@ -51,29 +48,20 @@ public class TwitterVideoWebsiteCard extends AbstractTwitterCard {
         this.websiteUrl = websiteUrl;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getMediaUrl() {
+        return mediaUrl;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setMediaUrl(String mediaUrl) {
+        this.mediaUrl = mediaUrl;
     }
 
-    public String getVideoHlsUrl() {
-        return videoHlsUrl;
-    }
-
-    @SuppressWarnings("unused")
-    public void setVideoHlsUrl(String videoHlsUrl) {
-        this.videoHlsUrl = videoHlsUrl;
-    }
-
-    public String getVideoPosterUrl() {
-        return videoPosterUrl;
+    public String getPosterMediaUrl() {
+        return posterMediaUrl;
     }
 
     @SuppressWarnings("unused")
-    public void setVideoPosterUrl(String videoPosterUrl) {
-        this.videoPosterUrl = videoPosterUrl;
+    public void setPosterMediaUrl(String posterMediaUrl) {
+        this.posterMediaUrl = posterMediaUrl;
     }
 }

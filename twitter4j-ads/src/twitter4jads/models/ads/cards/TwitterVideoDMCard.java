@@ -9,27 +9,24 @@ import com.google.gson.annotations.SerializedName;
  */
 public class TwitterVideoDMCard extends AbstractTwitterDMCard {
 
-    @SerializedName("video_url")
-    private String videoUrl;
+    @SerializedName("media_url")
+    private String mediaUrl;
 
     @SerializedName("video_owner_id")
     private String videoOwnerId;
 
-    @SerializedName("video_content_id")
-    private String videoContentId;
+    @SerializedName("media_key")
+    private String mediaKey;
 
-    @SerializedName("video_hls_url")
-    private String videoHlsUrl;
+    @SerializedName("poster_media_url")
+    private String posterMediaUrl;
 
-    @SerializedName("video_poster_url")
-    private String videoPosterUrl;
-
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getMediaUrl() {
+        return mediaUrl;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setMediaUrl(String mediaUrl) {
+        this.mediaUrl = mediaUrl;
     }
 
     public String getVideoOwnerId() {
@@ -40,27 +37,19 @@ public class TwitterVideoDMCard extends AbstractTwitterDMCard {
         this.videoOwnerId = videoOwnerId;
     }
 
-    public String getVideoContentId() {
-        return videoContentId;
+    public String getMediaKey() {
+        return mediaKey;
     }
 
-    public void setVideoContentId(String videoContentId) {
-        this.videoContentId = videoContentId;
+    public void setMediaKey(String mediaKey) {
+        this.mediaKey = mediaKey;
     }
 
-    public String getVideoHlsUrl() {
-        return videoHlsUrl;
+    public String getPosterMediaUrl() {
+        return posterMediaUrl;
     }
 
-    public void setVideoHlsUrl(String videoHlsUrl) {
-        this.videoHlsUrl = videoHlsUrl;
-    }
-
-    public String getVideoPosterUrl() {
-        return videoPosterUrl;
-    }
-
-    public void setVideoPosterUrl(String videoPosterUrl) {
-        this.videoPosterUrl = videoPosterUrl;
+    public void setPosterMediaUrl(String posterMediaUrl) {
+        this.posterMediaUrl = posterMediaUrl;
     }
 }

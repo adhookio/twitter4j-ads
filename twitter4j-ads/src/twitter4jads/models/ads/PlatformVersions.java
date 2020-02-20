@@ -21,8 +21,8 @@ public class PlatformVersions extends TwitterEntity{
     @SerializedName("number")
     private String number;
 
-    @SerializedName("platform")
-    private String platform;
+    @SerializedName("os_type")
+    private String osType;
 
     public String getName() {
         return name;
@@ -56,11 +56,11 @@ public class PlatformVersions extends TwitterEntity{
         this.number = number;
     }
 
-    public String getPlatform() {
-        return platform;
+    public String getOsType() {
+        return osType;
     }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
+    public void setOsType(String osType) {
+        this.osType = osType;
     }
 }

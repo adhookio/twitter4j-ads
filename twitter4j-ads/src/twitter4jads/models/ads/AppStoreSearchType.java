@@ -6,5 +6,5 @@ package twitter4jads.models.ads;
  */
 public enum AppStoreSearchType {
 
-    IOS_APP_STORE, GOOGLE_PLAY
+    IOS, ANDROID
 }

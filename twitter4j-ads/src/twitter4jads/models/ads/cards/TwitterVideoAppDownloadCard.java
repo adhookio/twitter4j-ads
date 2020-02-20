@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
  * Date: 27/08/15
  */
 public class TwitterVideoAppDownloadCard extends AbstractAppCard {
-    @SerializedName("video_content_id")
-    private String channelVideoId;
+    @SerializedName("media_key")
+    private String mediaKey;
 
-    @SerializedName("video_url")
-    private String channelVideoUrl;
+    @SerializedName("media_url")
+    private String mediaUrl;
 
     @SerializedName("content_duration_seconds")
     private String channelVideoLength;
@@ -19,20 +19,20 @@ public class TwitterVideoAppDownloadCard extends AbstractAppCard {
     @SerializedName("image_media_id")
     private String channelImageId;
 
-    public String getChannelVideoId() {
-        return channelVideoId;
+    public String getMediaKey() {
+        return mediaKey;
     }
 
-    public void setChannelVideoId(String channelVideoId) {
-        this.channelVideoId = channelVideoId;
+    public void setMediaKey(String mediaKey) {
+        this.mediaKey = mediaKey;
     }
 
-    public String getChannelVideoUrl() {
-        return channelVideoUrl;
+    public String getMediaUrl() {
+        return mediaUrl;
     }
 
-    public void setChannelVideoUrl(String channelVideoUrl) {
-        this.channelVideoUrl = channelVideoUrl;
+    public void setMediaUrl(String mediaUrl) {
+        this.mediaUrl = mediaUrl;
     }
 
     public String getChannelVideoLength() {
@@ -51,14 +51,14 @@ public class TwitterVideoAppDownloadCard extends AbstractAppCard {
         this.channelImageId = channelImageId;
     }
 
-    public String getPosterVideoUrl() {
-        return posterVideoUrl;
+    public String getPosterMediaUrl() {
+        return posterMediaUrl;
     }
 
-    public void setPosterVideoUrl(String posterVideoUrl) {
-        this.posterVideoUrl = posterVideoUrl;
+    public void setPosterMediaUrl(String posterMediaUrl) {
+        this.posterMediaUrl = posterMediaUrl;
     }
 
-    @SerializedName("video_poster_url")
-    private String posterVideoUrl;
+    @SerializedName("poster_media_url")
+    private String posterMediaUrl;
 }

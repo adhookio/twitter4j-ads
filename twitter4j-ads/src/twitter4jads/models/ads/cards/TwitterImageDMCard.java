@@ -8,14 +8,25 @@ import com.google.gson.annotations.SerializedName;
  */
 public class TwitterImageDMCard extends AbstractTwitterDMCard {
 
-    @SerializedName("image")
-    private String imageUrl;
+    @SerializedName("media_url")
+    private String mediaUrl;
 
-    public String getImageUrl() {
-        return imageUrl;
+    @SerializedName("media_key")
+    private String mediaKey;
+
+    public String getMediaUrl() {
+        return mediaUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setMediaUrl(String mediaUrl) {
+        this.mediaUrl = mediaUrl;
+    }
+
+    public String getMediaKey() {
+        return mediaKey;
+    }
+
+    public void setMediaKey(String mediaKey) {
+        this.mediaKey = mediaKey;
     }
 }

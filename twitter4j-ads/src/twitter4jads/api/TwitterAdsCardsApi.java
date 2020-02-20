@@ -182,7 +182,7 @@ public interface TwitterAdsCardsApi {
      * @return details of the updated card if successful
      */
     BaseAdsResponse<TwitterWebsiteCard> updateWebsiteCard(String accountId, String name, String cardId, String websiteTitle, String websiteUrl,
-                                                          String imageMediaId) throws TwitterException;
+            String imagemediaKey) throws TwitterException;
 
     /**
      * @param accountId The identifier for the leveraged account. (required)
@@ -193,7 +193,7 @@ public interface TwitterAdsCardsApi {
      * @throws TwitterException
      */
     BaseAdsResponse<TwitterWebsiteCard> createWebsiteCard(String accountId, String name, String websiteTitle,
-            String websiteUrl, String imageMediaId)
+            String websiteUrl, String imagemediaKey)
         throws TwitterException;
 
     /**
@@ -213,7 +213,7 @@ public interface TwitterAdsCardsApi {
      */
     BaseAdsResponse<TwitterMobileAppCard> createAppDownloadCard(String accountId, String name, String countryCode, String iphoneAppId,
                                                                 String ipadAppId, String googlePlayAppId, String iphoneDeepLink, String ipadDeepLink,
-                                                                String googlePlayDeepLink, String imageMediaId,
+            String googlePlayDeepLink, String imagemediaKey,
                                                                 String customAppDescription, String callToAction) throws TwitterException;
 
     /**
@@ -234,32 +234,32 @@ public interface TwitterAdsCardsApi {
      */
     BaseAdsResponse<TwitterMobileAppCard> updateAppDownloadCard(String accountId, String name, String cardId, String countryCode,
                                                                 String iphoneAppId, String ipadAppId, String googlePlayAppId, String iphoneDeepLink,
-                                                                String ipadDeepLink, String googlePlayDeepLink, String imageMediaId,
+            String ipadDeepLink, String googlePlayDeepLink, String imagemediaKey,
                                                                 String customAppDescription, String callToAction)
         throws TwitterException;
 
 
     BaseAdsResponse<TwitterImageAppDownloadCard> createImageAppDownloadCard(String accountId, String name, String countryCode, String iphoneAppId,
                                                                             String ipadAppId, String googlePlayAppId, String iphoneDeepLink,
-                                                                            String ipadDeepLink, String googlePlayDeepLink, String imageMediaId,
+            String ipadDeepLink, String googlePlayDeepLink, String imageMediaKey,
                                                                             String callToAction) throws TwitterException;
 
     BaseAdsResponse<TwitterImageAppDownloadCard> updateImageAppDownloadCard(String accountId, String name, String cardId, String countryCode,
                                                                             String iphoneAppId, String ipadAppId, String googlePlayAppId,
                                                                             String iphoneDeepLink, String ipadDeepLink, String googlePlayDeepLink,
-                                                                            String imageMediaId, String callToAction)
+            String imagemediaKey, String callToAction)
         throws TwitterException;
 
     BaseAdsResponse<TwitterVideoAppDownloadCard> createVideoAppDownloadCard(String accountId, String name, String countryCode, String iphoneAppId,
                                                                             String ipadAppId, String googlePlayAppId, String iphoneDeepLink,
-                                                                            String ipadDeepLink, String googlePlayDeepLink, String imageMediaId,
+            String ipadDeepLink, String googlePlayDeepLink, String imagemediaKey,
                                                                             String callToAction, TwitterLibraryMedia twitterVideo)
         throws TwitterException, IOException, InterruptedException;
 
     BaseAdsResponse<TwitterVideoAppDownloadCard> updateVideoAppDownloadCard(String accountId, String name, String cardId, String countryCode,
                                                                             String iphoneAppId, String ipadAppId, String googlePlayAppId,
                                                                             String iphoneDeepLink, String ipadDeepLink, String googlePlayDeepLink,
-                                                                            String imageMediaId, String callToActionValue, TwitterLibraryMedia video)
+            String imagemediaKey, String callToActionValue, TwitterLibraryMedia video)
         throws TwitterException, IOException, InterruptedException;
 
 
@@ -267,13 +267,13 @@ public interface TwitterAdsCardsApi {
                                                                               String firstTweet, String secondHashtag, String secondTweet,
                                                                               String thirdHashtag, String thirdTweet, String fourthHashtag,
                                                                               String fourthTweet, String thanksText, String thanksUrl,
-                                                                              String imageUrl, String imageMediaId) throws TwitterException;
+            String imageUrl, String imagemediaKey) throws TwitterException;
 
     BaseAdsResponse<TwitterImageConversationCard> updateImageConversationCard(String accountId, String cardId, String name, String title,
                                                                               String firstHashtag, String firstTweet, String secondHashtag,
                                                                               String secondTweet, String thirdHashtag, String thirdTweet,
                                                                               String fourthHashtag, String fourthTweet, String thanksText,
-                                                                              String thanksUrl, String imageUrl, String imageMediaId)
+            String thanksUrl, String imageUrl, String imagemediaKey)
         throws TwitterException;
 
     BaseAdsResponse<TwitterImageConversationCard> deleteImageConversationCard(String accountId, String cardId) throws TwitterException;
@@ -282,14 +282,14 @@ public interface TwitterAdsCardsApi {
                                                                               String firstTweet, String secondHashtag, String secondTweet,
                                                                               String thirdHashtag, String thirdTweet, String fourthHashtag,
                                                                               String fourthTweet, String thanksText, String thanksUrl,
-                                                                              String imageMediaId, TwitterLibraryMedia twitterVideo)
+            String imagemediaKey, TwitterLibraryMedia twitterVideo)
             throws TwitterException;
 
     BaseAdsResponse<TwitterVideoConversationCard> updateVideoConversationCard(String accountId, String cardId, String name, String title,
                                                                               String firstHashtag, String firstTweet, String secondHashtag,
                                                                               String secondTweet, String thirdHashtag, String thirdTweet,
                                                                               String fourthHashtag, String fourthTweet, String thanksText,
-                                                                              String thanksUrl, String imageMediaId, TwitterLibraryMedia twitterVideo)
+            String thanksUrl, String imagemediaKey, TwitterLibraryMedia twitterVideo)
         throws TwitterException;
 
     BaseAdsResponse<TwitterVideoConversationCard> deleteVideoConversationCard(String accountId, String cardId) throws TwitterException;
@@ -300,23 +300,23 @@ public interface TwitterAdsCardsApi {
                                                           String secondCta, Long secondWelcomeMessageId,
                                                           String thirdCta, Long thirdWelcomeMessageId, String fourthCta, Long fourthWelcomeMessageId,
                                                           Long recipientAccountId,
-                                                          String imageUrl, String imageMediaId) throws TwitterException;
+            String imageUrl, String imagemediaKey) throws TwitterException;
 
     BaseAdsResponse<TwitterVideoDMCard> createVideoDMCard(String accountId, String name, String firstCta, Long firstWelcomeMessageId,
                                                           String secondCta, Long secondWelcomeMessageId, String thirdCta,
                                                           Long thirdWelcomeMessageId, String fourthCta, Long fourthWelcomeMessageId,
                                                           Long recipientAccountId, String imageUrl, String videoUrl,
-                                                          String imageMediaId, String videoMediaKey) throws TwitterException;
+            String imagemediaKey, String videoMediaKey) throws TwitterException;
 
     BaseAdsResponse<TwitterImageDMCard> updateImageDMCard(String accountId, String name, String firstCta, Long firstWelcomeMessageId,
                                                           String secondCta, Long secondWelcomeMessageId,
                                                           String thirdCta, Long thirdWelcomeMessageId, String fourthCta, Long fourthWelcomeMessageId,
-                                                          String imageUrl, String imageMediaId, String channelId) throws TwitterException;
+            String imageUrl, String imagemediaKey, String channelId) throws TwitterException;
 
     BaseAdsResponse<TwitterVideoDMCard> updateVideoDMCard(String accountId, String name, String firstCta, Long firstWelcomeMessageId,
                                                           String secondCta, Long secondWelcomeMessageId, String thirdCta,
                                                           Long thirdWelcomeMessageId, String fourthCta, Long fourthWelcomeMessageId,
-                                                          String imageUrl, String videoUrl, String imageMediaId, String videoMediaKey,
+            String imageUrl, String videoUrl, String imagemediaKey, String videoMediaKey,
                                                           String channelId) throws TwitterException;
 
     BaseAdsResponse<TwitterImageDMCard> deleteImageDMCard(String accountId, String cardId) throws TwitterException;

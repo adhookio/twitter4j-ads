@@ -20,8 +20,8 @@ public class TwitterAccountMedia {
     @SerializedName("media_url")
     private String mediaUrl;
 
-    @SerializedName("video_id")
-    private String videoId;
+    @SerializedName("media_key")
+    private String mediaKey;
 
     @SerializedName("account_id")
     private String accountId;
@@ -65,12 +65,12 @@ public class TwitterAccountMedia {
         this.mediaUrl = mediaUrl;
     }
 
-    public String getVideoId() {
-        return videoId;
+    public String getMediaKey() {
+        return mediaKey;
     }
 
-    public void setVideoId(String videoId) {
-        this.videoId = videoId;
+    public void setMediaKey(String mediaKey) {
+        this.mediaKey = mediaKey;
     }
 
     public String getAccountId() {
