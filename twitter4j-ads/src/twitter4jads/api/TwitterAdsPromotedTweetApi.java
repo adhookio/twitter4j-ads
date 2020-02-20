@@ -1,6 +1,11 @@
 package twitter4jads.api;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+
 import com.google.common.base.Optional;
+
 import twitter4jads.BaseAdsListResponse;
 import twitter4jads.BaseAdsListResponseIterable;
 import twitter4jads.BaseAdsResponse;
@@ -8,10 +13,6 @@ import twitter4jads.internal.models4j.Status;
 import twitter4jads.internal.models4j.TwitterException;
 import twitter4jads.models.ads.PromotedTweets;
 import twitter4jads.models.ads.sort.PromotedTweetsSortByField;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * User: abhay
@@ -63,7 +64,7 @@ public interface TwitterAdsPromotedTweetApi {
                                     String videoDescription, String callToAction, String ctaValue)
             throws TwitterException, IOException, InterruptedException;
 
-    Status createPromotedTweetV2(String accountId, String targetUserId, String tweetText, List<String> mediaIds,
+    Status createPromotedTweetV2(String accountId, String targetUserId, String tweetText, List<String> mediaKeys,
                                  String videoId, String videoTitle, String videoDescription, String videoCallToAction, String videoCtaValue,
                                  String cardUri, boolean promotedOnly) throws TwitterException, IOException;
 

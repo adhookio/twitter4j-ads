@@ -34,7 +34,6 @@ public interface TwitterAdsConstants {
     String PARAM_LINE_ITEM_ID = "line_item_id";
     String PARAM_SCHEDULED_TWEET_ID = "scheduled_tweet_id";
     String PARAM_ACCOUNT_MEDIA_ID = "account_media_id";
-    String PARAM_MEDIA_IDS = "media_ids";
 
     String PARAM_MEDIA_KEYS = "media_keys";
     String PARAM_LANDING_URL = "landing_url";
@@ -203,8 +202,6 @@ public interface TwitterAdsConstants {
      */
     String VIDEOS = "videos";
     String PARAM_VIDEO_ID = "video_id";
-    String PARAM_VIDEO_MEDIA_ID = "video_media_id";
-    String PARAM_VIDEO_IDS = "video_ids";
     String PARAM_COMMAND = "command";
     String PARAM_POSTER_IMAGE_ID = "poster_image_media_id";
     String PARAM_MEDIA_ID = "media_id";

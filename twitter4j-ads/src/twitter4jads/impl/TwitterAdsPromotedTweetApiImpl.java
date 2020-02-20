@@ -5,7 +5,7 @@ import static twitter4jads.TwitterAdsConstants.PARAM_CARD_URI;
 import static twitter4jads.TwitterAdsConstants.PARAM_COUNT;
 import static twitter4jads.TwitterAdsConstants.PARAM_CURSOR;
 import static twitter4jads.TwitterAdsConstants.PARAM_LINE_ITEM_ID;
-import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_IDS;
+import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_KEYS;
 import static twitter4jads.TwitterAdsConstants.PARAM_NULLCAST;
 import static twitter4jads.TwitterAdsConstants.PARAM_SCHEDULED_TWEET_ID;
 import static twitter4jads.TwitterAdsConstants.PARAM_SORT_BY;
@@ -256,12 +256,14 @@ public class TwitterAdsPromotedTweetApiImpl implements TwitterAdsPromotedTweetAp
 
 
     @Override
-    public Status createPromotedTweetV2(String accountId, String targetUserId, String tweetText, List<String> mediaIds, String videoId,
+    public Status createPromotedTweetV2(String accountId, String targetUserId, String tweetText, List<String> mediaKeys,
+            String videoId,
                                         String videoTitle, String videoDescription, String videoCallToAction, String videoCtaValue, String cardUri,
                                         boolean promotedOnly) throws TwitterException, IOException {
         try {
             final List<HttpParameter> params =
-                    validateAndCreateParamsForPromotedTweet(accountId, targetUserId, tweetText, mediaIds, videoId, videoTitle, videoDescription,
+                    validateAndCreateParamsForPromotedTweet(accountId, targetUserId, tweetText, mediaKeys, videoId,
+                            videoTitle, videoDescription,
                             videoCallToAction, videoCtaValue, cardUri, promotedOnly);
 
             final String url = twitterAdsClient.getBaseAdsAPIUrl() + PREFIX_ACCOUNTS_URI_5 + accountId
@@ -283,7 +285,7 @@ public class TwitterAdsPromotedTweetApiImpl implements TwitterAdsPromotedTweetAp
     }
 
     private List<HttpParameter> validateAndCreateParamsForPromotedTweet(String accountId, String targetUserId, String tweetText,
-                                                                        List<String> mediaIds, String videoId, String videoTitle,
+            List<String> mediaKeys, String videoId, String videoTitle,
                                                                         String videoDescription, String videoCallToAction, String videoCtaValue,
                                                                         String cardUri, boolean promotedOnly) throws TwitterException {
         List<HttpParameter> params = Lists.newArrayList();
@@ -303,8 +305,8 @@ public class TwitterAdsPromotedTweetApiImpl implements TwitterAdsPromotedTweetAp
             params.add(new HttpParameter(PARAM_CARD_URI, cardUri));
         }
 
-        if (TwitterAdUtil.isNotEmpty(mediaIds)) {
-            params.add(new HttpParameter(PARAM_MEDIA_IDS, TwitterAdUtil.getCsv(mediaIds)));
+        if (TwitterAdUtil.isNotEmpty(mediaKeys)) {
+            params.add(new HttpParameter(PARAM_MEDIA_KEYS, TwitterAdUtil.getCsv(mediaKeys)));
         }
         if (TwitterAdUtil.isNotNullOrEmpty(videoId)) {
             params.add(new HttpParameter(PARAM_VIDEO_ID, videoId));

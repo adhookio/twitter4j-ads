@@ -43,12 +43,10 @@ public interface TwitterDraftTweetApi {
      * card://855591459410511943 IMPORTANT
      * @param mediaKeys Associate media with the Tweet by specifying a comma-separated list of identifiers. Include up
      * to 4 images, 1 animated GIF, or 1 video. See Uploading Media for additional details on uploading media.
-     * @param mediaIds Associate media with the Tweet by specifying a comma-separated list of identifiers. Include up to
-     * 4 images, 1 animated GIF, or 1 video. See Uploading Media for additional details on uploading media.
      * @param nullCast Whether to create a nullcasted (or “Promoted-only”) Tweet..
      */
     BaseAdsResponse<DraftTweet> create(String accountId, String text, String userId, String cardURI,
-            List<String> mediaKeys, List<String> mediaIds,
+            List<String> mediaKeys,
             boolean nullCast) throws TwitterException;
 
     BaseAdsResponse<DraftTweet> update(String accountId, String DraftTweetId, String text, String cardURI,

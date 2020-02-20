@@ -2,7 +2,6 @@ package twitter4jads.impl;
 
 import static twitter4jads.TwitterAdsConstants.PARAM_CARD_URI;
 import static twitter4jads.TwitterAdsConstants.PARAM_CURSOR;
-import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_IDS;
 import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_KEYS;
 import static twitter4jads.TwitterAdsConstants.PARAM_NULLCAST;
 import static twitter4jads.TwitterAdsConstants.PARAM_TEXT;
@@ -80,7 +79,7 @@ public class TwitterDraftTweetsApiImpl implements TwitterDraftTweetApi {
 
     @Override
     public BaseAdsResponse<DraftTweet> create(String accountId, String text, String userId, String cardURI,
-            List<String> mediaKeys, List<String> mediaIds,
+            List<String> mediaKeys,
             boolean nullCast) throws TwitterException {
         TwitterAdUtil.ensureNotNull(accountId, "accountId");
         TwitterAdUtil.ensureNotNull(userId, "userId");
@@ -92,9 +91,6 @@ public class TwitterDraftTweetsApiImpl implements TwitterDraftTweetApi {
         }
         if (TwitterAdUtil.isNotEmpty(mediaKeys)) {
             params.add(new HttpParameter(PARAM_MEDIA_KEYS, TwitterAdUtil.getCsv(mediaKeys)));
-        }
-        if (TwitterAdUtil.isNotEmpty(mediaIds)) {
-            params.add(new HttpParameter(PARAM_MEDIA_IDS, TwitterAdUtil.getCsv(mediaIds)));
         }
         if (TwitterAdUtil.isNotNullOrEmpty(text)) {
             params.add(new HttpParameter(PARAM_TEXT, text));

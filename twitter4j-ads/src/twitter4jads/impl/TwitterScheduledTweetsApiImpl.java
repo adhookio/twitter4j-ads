@@ -2,7 +2,7 @@ package twitter4jads.impl;
 
 import static twitter4jads.TwitterAdsConstants.PARAM_CARD_URI;
 import static twitter4jads.TwitterAdsConstants.PARAM_CURSOR;
-import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_IDS;
+import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_KEYS;
 import static twitter4jads.TwitterAdsConstants.PARAM_NULLCAST;
 import static twitter4jads.TwitterAdsConstants.PARAM_SCHEDULED_AT;
 import static twitter4jads.TwitterAdsConstants.PARAM_TEXT;
@@ -80,7 +80,7 @@ public class TwitterScheduledTweetsApiImpl implements TwitterScheduledTweetApi {
 
     @Override
     public BaseAdsResponse<ScheduledTweet> create(String accountId, Date scheduledAt, String text, String userId, String cardURI,
-                                                  List<String> mediaIds,
+            List<String> mediaKeys,
                                                   boolean nullCast) throws TwitterException {
         TwitterAdUtil.ensureNotNull(accountId, "accountId");
         TwitterAdUtil.ensureNotNull(userId, "userId");
@@ -92,8 +92,8 @@ public class TwitterScheduledTweetsApiImpl implements TwitterScheduledTweetApi {
             params.add(new HttpParameter(PARAM_CARD_URI, cardURI));
         }
         params.add(new HttpParameter(PARAM_SCHEDULED_AT, TwitterAdUtil.convertTimeToZuluFormatAndToUTC(scheduledAt.getTime())));
-        if (TwitterAdUtil.isNotEmpty(mediaIds)) {
-            params.add(new HttpParameter(PARAM_MEDIA_IDS, TwitterAdUtil.getCsv(mediaIds)));
+        if (TwitterAdUtil.isNotEmpty(mediaKeys)) {
+            params.add(new HttpParameter(PARAM_MEDIA_KEYS, TwitterAdUtil.getCsv(mediaKeys)));
         }
         if (TwitterAdUtil.isNotNullOrEmpty(text)) {
             params.add(new HttpParameter(PARAM_TEXT, text));
@@ -109,7 +109,7 @@ public class TwitterScheduledTweetsApiImpl implements TwitterScheduledTweetApi {
 
     @Override
     public BaseAdsResponse<ScheduledTweet> update(String accountId, String scheduledTweetId, Date scheduledAt, String text, String cardURI,
-                                                  List<String> mediaIds) throws TwitterException {
+            List<String> mediaKeys) throws TwitterException {
         TwitterAdUtil.ensureNotNull(accountId, "accountId");
         TwitterAdUtil.ensureNotNull(scheduledTweetId, "scheduledTweetId");
 
@@ -117,8 +117,8 @@ public class TwitterScheduledTweetsApiImpl implements TwitterScheduledTweetApi {
         if (TwitterAdUtil.isNotNullOrEmpty(cardURI)) {
             params.add(new HttpParameter(PARAM_CARD_URI, cardURI));
         }
-        if (TwitterAdUtil.isNotEmpty(mediaIds)) {
-            params.add(new HttpParameter(PARAM_MEDIA_IDS, TwitterAdUtil.getCsv(mediaIds)));
+        if (TwitterAdUtil.isNotEmpty(mediaKeys)) {
+            params.add(new HttpParameter(PARAM_MEDIA_KEYS, TwitterAdUtil.getCsv(mediaKeys)));
         }
         if (TwitterAdUtil.isNotNullOrEmpty(text)) {
             params.add(new HttpParameter(PARAM_TEXT, text));
