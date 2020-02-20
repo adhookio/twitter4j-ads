@@ -83,7 +83,7 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
     }
 
     @Override
-    public String uploadMediaAndGetMediaKey(String mediaUrl, Set<String> accountUserIds,
+    public String uploadMediaAndGetMediaId(String mediaUrl, Set<String> accountUserIds,
             TwitterMediaType twitterMediaType, String name)
             throws TwitterException {
         final UploadMediaObjectResponse responseFromFinalize = uploadAndGetMediaKey(mediaUrl, accountUserIds,
@@ -94,7 +94,7 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
 
         //as per documentation if media process info is null then the video is ready
         if (responseFromFinalize.getUploadMediaProcessingInfo() == null) {
-            return mediaKey;
+            return mediaId;
         }
 
         if (responseFromFinalize.getUploadMediaProcessingInfo().getUploadErrorInfo() != null) {
@@ -105,7 +105,7 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
         final Integer progressPercentage = responseFromFinalize.getUploadMediaProcessingInfo().getProgressPercentage();
         if ((TwitterAdUtil.isNotNullOrEmpty(state) && state.equalsIgnoreCase("succeeded")) ||
                 (progressPercentage != null && progressPercentage == 100)) {
-            return mediaKey;
+            return mediaId;
         }
 
         return waitForVideoProcessingAndReturnId(mediaId, mediaKey, responseFromFinalize, videoSize);
@@ -320,7 +320,7 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
             }
             //as per documentation if media process info is null then the video is ready
             if (statusResponse.getUploadMediaProcessingInfo() == null) {
-                return mediaKey;
+                return mediaIdString;
             }
             if (statusResponse.getUploadMediaProcessingInfo().getUploadErrorInfo() != null) {
                 throw new TwitterException(statusResponse.getUploadMediaProcessingInfo().getUploadErrorInfo().getMessage());
@@ -330,7 +330,7 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
             Integer progressPercentage = statusResponse.getUploadMediaProcessingInfo().getProgressPercentage();
             if ((TwitterAdUtil.isNotNullOrEmpty(state) && state.equalsIgnoreCase("succeeded")) ||
                     (progressPercentage != null && progressPercentage == 100)) {
-                return mediaKey;
+                return mediaIdString;
             }
         }
 
