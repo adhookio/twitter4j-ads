@@ -16,14 +16,12 @@ public interface TwitterAdsConstants {
 
     int VERSION = 6;
 
-    String TWEET_PREVIEW_PATH = "/tweet/preview/";
     String UPLOAD_MEDIA_URL = "media/";
     String UPLOAD_JSON = "upload.json";
 
     String PREFIX_BATCH_ACCOUNTS_V5 = VERSION + "/batch/accounts/";
 
     String V5_PREFIX_STATS_JOB_ACCOUNTS_URI = VERSION + "/stats/jobs/accounts/";
-    String PREFIX_VIDEOS = "/videos";
 
     String PREFIX_STATS_ACCOUNTS_URI = VERSION + "/stats/accounts/";
     String PARAM_WITH_DELETED = "with_deleted";
@@ -54,21 +52,16 @@ public interface TwitterAdsConstants {
     String PARAM_TARGETING_VALUE = "targeting_value";
 
     String PARAM_OPERATOR_TYPE = "operator_type";
-    String PARAM_TAILORED_AUDIENCE_EXPANSION = "tailored_audience_expansion";
-    String PARAM_TAILORED_AUDIENCE_TYPE = "tailored_audience_type";
     String PARAM_PROMOTED_ACCOUNTS_IDS = "promoted_account_ids";
     String PARAM_ACCOUNT_ID = "account_id";
     String PARAM_CALL_TO_ACTION = "call_to_action";
     String PARAM_CALL_TO_ACTION_URL = "call_to_action_url";
-    String PARAM_CREATIVE_TYPE = "creative_type";
     String PARAM_CURRENCY = "currency";
     String PARAM_TWEET_IDS = "tweet_ids";
 
     String PARAM_TWEET_TYPE = "tweet_type";
-    String PARAM_TWEET_ID = "tweet_id";
     String PARAM_USER_ID = "user_id";
     String PARAM_AS_USER_ID = "as_user_id";
-    String PARAM_SCOPED_TO = "scoped_to";
     String PARAM_SCHEDULED_AT = "scheduled_at";
 
     String PREFIX_ACCOUNTS_URI_5 = VERSION + "/accounts/";
@@ -145,13 +138,7 @@ public interface TwitterAdsConstants {
     String PARAM_GOOGLEPLAY_DEEP_LINK = "googleplay_deep_link";
     String PARAM_CUSTOM_APP_DESCRIPTION = "custom_app_description";
     String PARAM_ID = "id";
-    String PARAM_WIDE_APP_IMAGE = "wide_app_image";
-    String PARAM_WIDE_APP_IMAGE_DATA = "wide_app_image_data";
-    String PARAM_CUSTOM_ICON_MEDIA_ID = "custom_icon_media_id";
     String APP_CTA = "app_cta";
-    String PARAM_COUNTRY = "country";
-    String PARAM_PLATFORM = "platform";
-    String PARAM_PROMOTED_TWEET_IDS = "promoted_tweet_ids";
     String PARAM_PRIMARY_WEB_EVENT_TAG = "primary_web_event_tag";
     String PATH_FEATURES = "/features";
 
@@ -180,7 +167,6 @@ public interface TwitterAdsConstants {
     String PARAM_CAMPAIGN_ENGAGEMENT = "campaign_engagement";
 
     String PARAM_APP_STORE_CATEGORY = "app_store_categories";
-    String PARAM_APP_STORE_CATEGORY_LOOKALIKE = "app_store_categories_lookalike";
 
     String PARAM_EVENT = "event";
 
@@ -211,8 +197,6 @@ public interface TwitterAdsConstants {
     String PARAM_SHARED = "shared";
     String PARAM_TOTAL_BYTES = "total_bytes";
     String PARAM_SEGMENT_INDEX = "segment_index";
-    String STATE_SUCCEEDED = "succeeded";
-    String STATE_IN_PROGRESS = "in_progress";
 
     /*
     for direct message cards
@@ -242,7 +226,6 @@ public interface TwitterAdsConstants {
     for promoted video tweet
      */
     String PARAM_STATUS = "status";
-    String TWEET_PREVIEW_TARGET = "preview_target";
     String PARAM_VIDEO_TITLE = "video_title";
     String PARAM_VIDEO_DESCRIPTION = "video_description";
     String PARAM_VIDEO_CTA = "video_cta";
