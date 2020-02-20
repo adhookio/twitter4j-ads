@@ -197,6 +197,7 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
                 break;
             case IMAGE:
                 params.add(new HttpParameter(PARAM_MEDIA_TYPE, "image/jpeg"));
+            params.add(new HttpParameter(PARAM_MEDIA_CATEGORY, "tweet_image"));
                 break;
             case DM_IMAGE:
                 params.add(new HttpParameter(PARAM_MEDIA_TYPE, "image/jpeg"));
