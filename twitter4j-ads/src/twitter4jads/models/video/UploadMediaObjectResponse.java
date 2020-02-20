@@ -14,6 +14,9 @@ public class UploadMediaObjectResponse {
     @SerializedName("media_id")
     private Long mediaId;
 
+    @SerializedName("media_key")
+    private String mediaKey;
+
     @SerializedName("size")
     private Long size;
 
@@ -25,6 +28,14 @@ public class UploadMediaObjectResponse {
 
     @SerializedName("processing_info")
     private UploadMediaProcessingInfo uploadMediaProcessingInfo;
+
+    public String getMediaKey() {
+        return mediaKey;
+    }
+
+    public void setMediaKey(String mediaKey) {
+        this.mediaKey = mediaKey;
+    }
 
     public String getMediaIdString() {
         return mediaIdString;

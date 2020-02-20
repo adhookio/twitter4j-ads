@@ -1,36 +1,5 @@
 package twitter4jads.impl;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.reflect.TypeToken;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import twitter4jads.TwitterAdsClient;
-import twitter4jads.api.TwitterAdsMediaUploadApi;
-import twitter4jads.internal.http.HttpParameter;
-import twitter4jads.internal.http.HttpResponse;
-import twitter4jads.internal.models4j.TwitterException;
-import twitter4jads.internal.models4j.TwitterInvalidParameterException;
-import twitter4jads.internal.models4j.TwitterRuntimeException;
-import twitter4jads.models.ads.HttpVerb;
-import twitter4jads.models.media.TwitterMediaType;
-import twitter4jads.models.video.UploadMediaObjectResponse;
-import twitter4jads.util.TwitterAdUtil;
-
-import javax.xml.bind.DatatypeConverter;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import static twitter4jads.TwitterAdsConstants.FIFTY_MIB;
 import static twitter4jads.TwitterAdsConstants.FIVE_HUNDRED_MIB;
 import static twitter4jads.TwitterAdsConstants.MAX_IMAGE_SIZE_FOR_TWITTER_IN_BYTES;
@@ -54,6 +23,40 @@ import static twitter4jads.TwitterAdsConstants.TWO_MIB;
 import static twitter4jads.TwitterAdsConstants.UPLOAD_JSON;
 import static twitter4jads.TwitterAdsConstants.UPLOAD_MEDIA_URL;
 import static twitter4jads.internal.models4j.TwitterImpl.PARAM_ADDITIONAL_OWNERS;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.reflect.TypeToken;
+
+import twitter4jads.TwitterAdsClient;
+import twitter4jads.api.TwitterAdsMediaUploadApi;
+import twitter4jads.internal.http.HttpParameter;
+import twitter4jads.internal.http.HttpResponse;
+import twitter4jads.internal.models4j.TwitterException;
+import twitter4jads.internal.models4j.TwitterInvalidParameterException;
+import twitter4jads.internal.models4j.TwitterRuntimeException;
+import twitter4jads.models.ads.HttpVerb;
+import twitter4jads.models.media.TwitterMediaType;
+import twitter4jads.models.video.UploadMediaObjectResponse;
+import twitter4jads.util.TwitterAdUtil;
 
 /**
  * User: abhay
@@ -80,15 +83,18 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
     }
 
     @Override
-    public String uploadMediaAndGetMediaId(String mediaUrl, Set<String> accountUserIds, TwitterMediaType twitterMediaType, String name)
+    public String uploadMediaAndGetMediaKey(String mediaUrl, Set<String> accountUserIds,
+            TwitterMediaType twitterMediaType, String name)
             throws TwitterException {
-        final UploadMediaObjectResponse responseFromFinalize = uploadAndGetMediaId(mediaUrl, accountUserIds, twitterMediaType, name);
-        final String mediaIdString = responseFromFinalize.getMediaIdString();
+        final UploadMediaObjectResponse responseFromFinalize = uploadAndGetMediaKey(mediaUrl, accountUserIds,
+                twitterMediaType, name);
+        String mediaId = responseFromFinalize.getMediaIdString();
+        final String mediaKey = responseFromFinalize.getMediaKey();
         final Long videoSize = responseFromFinalize.getSize();
 
         //as per documentation if media process info is null then the video is ready
         if (responseFromFinalize.getUploadMediaProcessingInfo() == null) {
-            return mediaIdString;
+            return mediaKey;
         }
 
         if (responseFromFinalize.getUploadMediaProcessingInfo().getUploadErrorInfo() != null) {
@@ -99,15 +105,16 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
         final Integer progressPercentage = responseFromFinalize.getUploadMediaProcessingInfo().getProgressPercentage();
         if ((TwitterAdUtil.isNotNullOrEmpty(state) && state.equalsIgnoreCase("succeeded")) ||
                 (progressPercentage != null && progressPercentage == 100)) {
-            return mediaIdString;
+            return mediaKey;
         }
 
-        return waitForVideoProcessingAndReturnId(mediaIdString, responseFromFinalize, videoSize);
+        return waitForVideoProcessingAndReturnId(mediaId, mediaKey, responseFromFinalize, videoSize);
     }
 
     // ------------------------------------------------------------------- PRIVATE METHODS ----------------------------------------------------------
 
-    private UploadMediaObjectResponse uploadAndGetMediaId(String mediaUrl, Set<String> accountUserIds, TwitterMediaType twitterMediaType, String name)
+    private UploadMediaObjectResponse uploadAndGetMediaKey(String mediaUrl, Set<String> accountUserIds,
+            TwitterMediaType twitterMediaType, String name)
             throws TwitterException {
         try {
             String mediaSizeInBytes = getMediaSizeInBytes(mediaUrl);
@@ -292,7 +299,8 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
         return params.toArray(new HttpParameter[params.size()]);
     }
 
-    private String waitForVideoProcessingAndReturnId(String mediaIdString, UploadMediaObjectResponse statusResponse, Long videoSize)
+    private String waitForVideoProcessingAndReturnId(String mediaIdString, String mediaKey,
+            UploadMediaObjectResponse statusResponse, Long videoSize)
             throws TwitterException {
         if (statusResponse == null) {
             statusResponse = getUploadStatus(mediaIdString);
@@ -311,7 +319,7 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
             }
             //as per documentation if media process info is null then the video is ready
             if (statusResponse.getUploadMediaProcessingInfo() == null) {
-                return mediaIdString;
+                return mediaKey;
             }
             if (statusResponse.getUploadMediaProcessingInfo().getUploadErrorInfo() != null) {
                 throw new TwitterException(statusResponse.getUploadMediaProcessingInfo().getUploadErrorInfo().getMessage());
@@ -321,7 +329,7 @@ public class TwitterAdsMediaUploadApiImpl implements TwitterAdsMediaUploadApi {
             Integer progressPercentage = statusResponse.getUploadMediaProcessingInfo().getProgressPercentage();
             if ((TwitterAdUtil.isNotNullOrEmpty(state) && state.equalsIgnoreCase("succeeded")) ||
                     (progressPercentage != null && progressPercentage == 100)) {
-                return mediaIdString;
+                return mediaKey;
             }
         }
 

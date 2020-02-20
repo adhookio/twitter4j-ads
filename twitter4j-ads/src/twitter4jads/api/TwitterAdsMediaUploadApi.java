@@ -1,9 +1,9 @@
 package twitter4jads.api;
 
+import java.util.Set;
+
 import twitter4jads.internal.models4j.TwitterException;
 import twitter4jads.models.media.TwitterMediaType;
-
-import java.util.Set;
 
 /**
  * User: abhay
@@ -12,7 +12,8 @@ import java.util.Set;
  */
 public interface TwitterAdsMediaUploadApi {
 
-    String uploadMediaAndGetMediaId(String mediaUrl, Set<String> accountUserIds, TwitterMediaType twitterMediaType, String name)
+    String uploadMediaAndGetMediaKey(String mediaUrl, Set<String> accountUserIds, TwitterMediaType twitterMediaType,
+            String name)
             throws TwitterException;
 
 }
