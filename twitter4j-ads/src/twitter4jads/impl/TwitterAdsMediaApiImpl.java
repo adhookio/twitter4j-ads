@@ -8,8 +8,7 @@ import static twitter4jads.TwitterAdsConstants.PARAM_DESCRIPTION;
 import static twitter4jads.TwitterAdsConstants.PARAM_FILE_NAME;
 import static twitter4jads.TwitterAdsConstants.PARAM_LANDING_URL;
 import static twitter4jads.TwitterAdsConstants.PARAM_LINE_ITEM_ID;
-import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_CATEGORY;
-import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_ID;
+import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_KEY;
 import static twitter4jads.TwitterAdsConstants.PARAM_MEDIA_TYPE;
 import static twitter4jads.TwitterAdsConstants.PARAM_NAME;
 import static twitter4jads.TwitterAdsConstants.PARAM_POSTER_IMAGE_ID;
@@ -43,7 +42,6 @@ import twitter4jads.models.ads.HttpVerb;
 import twitter4jads.models.media.TwitterAccountMedia;
 import twitter4jads.models.media.TwitterAccountMediaCreative;
 import twitter4jads.models.media.TwitterLibraryMedia;
-import twitter4jads.models.media.TwitterMediaLibraryCategory;
 import twitter4jads.models.media.TwitterMediaLibraryType;
 import twitter4jads.util.TwitterAdUtil;
 
@@ -181,11 +179,11 @@ public class TwitterAdsMediaApiImpl implements TwitterAdsMediaApi {
     }
 
     @Override
-    public TwitterLibraryMedia createAndGetLibraryMedia(String accountId, String mediaId, TwitterMediaLibraryCategory mediaCategory, String name,
-                                                        String title, String description, String posterImageMediaId, String fileName)
+    public TwitterLibraryMedia createAndGetLibraryMedia(String accountId, String mediaKey, String name,
+            String title, String description, String posterImageMediaKey, String fileName)
             throws TwitterException {
         BaseAdsResponse<TwitterLibraryMedia> channelResponse =
-                associateMediaToLibrary(accountId, mediaId, mediaCategory, name, title, description, posterImageMediaId, fileName);
+                associateMediaToLibrary(accountId, mediaKey, name, title, description, posterImageMediaKey, fileName);
         if (channelResponse.getData() == null) {
             throw new TwitterException("Could not associate media to library, please retry");
         }
@@ -247,21 +245,17 @@ public class TwitterAdsMediaApiImpl implements TwitterAdsMediaApi {
 
     //----------------------------------------------PRIVATE METHODS----------------------------------------------
 
-    private BaseAdsResponse<TwitterLibraryMedia> associateMediaToLibrary(String accountId, String mediaId, TwitterMediaLibraryCategory mediaCategory,
+    private BaseAdsResponse<TwitterLibraryMedia> associateMediaToLibrary(String accountId, String mediaKey,
                                                                          String name, String title,
                                                                          String description,
-                                                                         String posterImageMediaId, String fileName)
+            String posterImageMediaKey, String fileName)
             throws TwitterException {
         TwitterAdUtil.ensureNotNull(accountId, "Account Id");
-        if (StringUtils.isNotBlank(mediaId)) {
-            TwitterAdUtil.ensureNotNull(mediaCategory, "Media category");
-        }
 
         final List<HttpParameter> params = new ArrayList<>();
 
-        if (StringUtils.isNotBlank(mediaId)) {
-            params.add(new HttpParameter(PARAM_MEDIA_CATEGORY, mediaCategory.name()));
-            params.add(new HttpParameter(PARAM_MEDIA_ID, mediaId));
+        if (StringUtils.isNotBlank(mediaKey)) {
+            params.add(new HttpParameter(PARAM_MEDIA_KEY, mediaKey));
         }
         if (StringUtils.isNotBlank(description)) {
             params.add(new HttpParameter(PARAM_DESCRIPTION, description));
@@ -272,8 +266,8 @@ public class TwitterAdsMediaApiImpl implements TwitterAdsMediaApi {
         if (StringUtils.isNotBlank(name)) {
             params.add(new HttpParameter(PARAM_NAME, name));
         }
-        if (StringUtils.isNotBlank(posterImageMediaId)) {
-            params.add(new HttpParameter(PARAM_POSTER_IMAGE_ID, posterImageMediaId));
+        if (StringUtils.isNotBlank(posterImageMediaKey)) {
+            params.add(new HttpParameter("poster_media_key", posterImageMediaKey));
         }
         if (StringUtils.isNotBlank(title)) {
             params.add(new HttpParameter(PARAM_TITLE, title));

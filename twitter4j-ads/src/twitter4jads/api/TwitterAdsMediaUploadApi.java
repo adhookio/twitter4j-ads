@@ -12,7 +12,7 @@ import twitter4jads.models.media.TwitterMediaType;
  */
 public interface TwitterAdsMediaUploadApi {
 
-    String uploadMediaAndGetMediaId(String mediaUrl, Set<String> accountUserIds, TwitterMediaType twitterMediaType,
+    String uploadMediaAndGetMediaKey(String mediaUrl, Set<String> accountUserIds, TwitterMediaType twitterMediaType,
             String name)
             throws TwitterException;
 

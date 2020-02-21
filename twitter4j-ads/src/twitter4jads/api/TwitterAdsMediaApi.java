@@ -6,7 +6,6 @@ import twitter4jads.internal.models4j.TwitterException;
 import twitter4jads.models.media.TwitterAccountMedia;
 import twitter4jads.models.media.TwitterAccountMediaCreative;
 import twitter4jads.models.media.TwitterLibraryMedia;
-import twitter4jads.models.media.TwitterMediaLibraryCategory;
 import twitter4jads.models.media.TwitterMediaLibraryType;
 
 /**
@@ -38,15 +37,17 @@ public interface TwitterAdsMediaApi {
                                                                             String landingUrl) throws TwitterException;
 
     /**
-     * @param accountId   The identifier for the leveraged account.
-     * @param mediaId     The media ID being used to create promoted video.
-     * @param title       Title of video creative being created.
+     * @param accountId The identifier for the leveraged account.
+     * @param mediaKey The media ID being used to create promoted video.
+     * @param title Title of video creative being created.
      * @param description Description of video creative being created.
      * @return Twitter Library Media
-     * @see <a href="https://dev.twitter.com/ads/reference/post/accounts/%3Aaccount_id/videos">https://dev.twitter.com/ads/reference/post/accounts/%3Aaccount_id/videos</a>
+     * @see <a href=
+     * "https://dev.twitter.com/ads/reference/post/accounts/%3Aaccount_id/videos">https://dev.twitter.com/ads/reference/post/accounts/%3Aaccount_id/videos</a>
      */
-    TwitterLibraryMedia createAndGetLibraryMedia(String accountId, String mediaId, TwitterMediaLibraryCategory mediaCategory, String name, String title, String description,
-                                                 String posterImageMediaId, String fileName) throws TwitterException;
+    TwitterLibraryMedia createAndGetLibraryMedia(String accountId, String mediaKey, String name, String title,
+            String description,
+            String posterImageMediaKey, String fileName) throws TwitterException;
 
     BaseAdsResponse<TwitterLibraryMedia> updateLibraryMediaByKey(String accountId, String mediaKey, String name, String title,
                                                                  String description, String posterImageKey, String fileName)
