@@ -31,6 +31,7 @@ import twitter4jads.models.ads.TwitterApplicationDetails;
 import twitter4jads.models.ads.TwitterBehavior;
 import twitter4jads.models.ads.TwitterBehaviorTaxonomy;
 import twitter4jads.models.ads.tags.TwitterApplicationList;
+import twitter4jads.models.ads.targeting.AudienceSummaryRequest;
 import twitter4jads.models.ads.targeting.TargetingParamRequest;
 import twitter4jads.models.ads.targeting.TargetingParamResponse;
 import twitter4jads.util.TwitterAdUtil;
@@ -281,18 +282,17 @@ public class TwitterAdsTargetingApiImpl implements TwitterAdsTargetingApi {
     }
 
     @Override
-    public BaseAdsResponse<AudienceSummary> getAudienceSummary(String accountId, List<TargetingParamRequest> targetingCriterias)
+    public BaseAdsResponse<AudienceSummary> getAudienceSummary(String accountId, AudienceSummaryRequest audienceSummaryRequest)
         throws TwitterException {
         TwitterAdUtil.ensureNotNull(accountId, "AccountId");
-        validateTargetingBatch(targetingCriterias);
-
+        TwitterAdUtil.ensureNotNull(audienceSummaryRequest, "audienceSummaryRequest");
 
         final String url = twitterAdsClient.getBaseAdsAPIUrl() + PREFIX_ACCOUNTS_URI_5 + accountId
                 + PATH_AUDIENCE_SUMMARY;
         final Type type = new TypeToken<BaseAdsResponse<AudienceSummary>>() {
         }.getType();
 
-        HttpResponse httpResponse = twitterAdsClient.postRequest(url, GSON.toJson(targetingCriterias));
+        HttpResponse httpResponse = twitterAdsClient.postRequest(url, GSON.toJson(audienceSummaryRequest));
         return GSON.fromJson(httpResponse.asString(), type);
     }
 

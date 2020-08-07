@@ -19,6 +19,7 @@ import twitter4jads.models.ads.TwitterAppStore;
 import twitter4jads.models.ads.TwitterBehavior;
 import twitter4jads.models.ads.TwitterBehaviorTaxonomy;
 import twitter4jads.models.ads.tags.TwitterApplicationList;
+import twitter4jads.models.ads.targeting.AudienceSummaryRequest;
 import twitter4jads.models.ads.targeting.TargetingParamRequest;
 import twitter4jads.models.ads.targeting.TargetingParamResponse;
 
@@ -281,7 +282,7 @@ public interface TwitterAdsTargetingApi {
     /**
      * @return audience_summary of the ad
      */
-    BaseAdsResponse<AudienceSummary> getAudienceSummary(String accountId, List<TargetingParamRequest> targetingParamRequests)
+    BaseAdsResponse<AudienceSummary> getAudienceSummary(String accountId, AudienceSummaryRequest audienceSummaryRequest)
             throws TwitterException;
 
     BaseAdsListResponseIterable<IabCategory> fetchIabCategories(String q) throws TwitterException;
