@@ -26,8 +26,8 @@ public class AssociateMediaCreativeResponse {
     @SerializedName("line_item_id")
     private String lineItemId;
 
-    @SerializedName("serving_status")
-    private String servingStatus;
+    @SerializedName("entity_status")
+    private String entityStatus;
 
 
     @SerializedName("updated_at")
@@ -84,12 +84,12 @@ public class AssociateMediaCreativeResponse {
         this.lineItemId = lineItemId;
     }
 
-    public String getServingStatus() {
-        return servingStatus;
+    public String getEntityStatus() {
+        return entityStatus;
     }
 
-    public void setServingStatus(String servingStatus) {
-        this.servingStatus = servingStatus;
+    public void setEntityStatus(String entityStatus) {
+        this.entityStatus = entityStatus;
     }
 
     public String getUpdatedAt() {

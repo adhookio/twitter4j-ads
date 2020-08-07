@@ -14,7 +14,7 @@ public interface TwitterAdsConstants {
     long MAX_VIDEO_WEBSITE_CARD_TITLE_LENGTH = 70L;
     int TAILORED_AUDIENCE_UPDATE_BATCH_SIZE = 2500;
 
-    int VERSION = 6;
+    int VERSION = 7;
 
     String UPLOAD_MEDIA_URL = "media/";
     String UPLOAD_JSON = "upload.json";
@@ -285,7 +285,7 @@ public interface TwitterAdsConstants {
     String PATH_PROMOTED_ACCOUNTS = "/promoted_accounts/";
     String PARAM_ATTRIBUTABLE_USER_ID = "attributable_user_id";
     String PATH_PROMOTABLE_USERS = "/promotable_users/";
-    String PATH_REACH_ESTIMATE = "/reach_estimate/";
+    String PATH_AUDIENCE_SUMMARY = "/audience_summary/";
     String PATH_LINE_ITEMS = "/line_items/";
     String PATH_TARGETING_CRITERIA = "/targeting_criteria/";
 

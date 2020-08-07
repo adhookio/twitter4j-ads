@@ -1,19 +1,15 @@
 package twitter4jads.api;
 
-import java.util.List;
-
 import com.google.common.base.Optional;
-
 import twitter4jads.BaseAdsListResponseIterable;
 import twitter4jads.BaseAdsResponse;
 import twitter4jads.internal.models4j.TwitterException;
 import twitter4jads.models.LocationType;
 import twitter4jads.models.ads.AppStoreSearchType;
+import twitter4jads.models.ads.AudienceSummary;
 import twitter4jads.models.ads.Conversations;
 import twitter4jads.models.ads.IabCategory;
-import twitter4jads.models.ads.NewTwitterReachEstimate;
 import twitter4jads.models.ads.OperatorType;
-import twitter4jads.models.ads.ProductType;
 import twitter4jads.models.ads.SuggestionType;
 import twitter4jads.models.ads.TargetingCriteria;
 import twitter4jads.models.ads.TargetingLocation;
@@ -25,6 +21,8 @@ import twitter4jads.models.ads.TwitterBehaviorTaxonomy;
 import twitter4jads.models.ads.tags.TwitterApplicationList;
 import twitter4jads.models.ads.targeting.TargetingParamRequest;
 import twitter4jads.models.ads.targeting.TargetingParamResponse;
+
+import java.util.List;
 
 /**
  * User: abhay
@@ -281,10 +279,9 @@ public interface TwitterAdsTargetingApi {
     BaseAdsListResponseIterable<IabCategory> getAllIabCategories(String q) throws TwitterException;
 
     /**
-     * @return reach_estimate of the ad
+     * @return audience_summary of the ad
      */
-    BaseAdsResponse<NewTwitterReachEstimate> getReachEstimate(String accountId, ProductType productType, List<TargetingCriteria> targetingCriterias,
-                                                              String objective, Long bidAmountLocalMicro, String currency, Long campaignDailyBudgetAmountLocalMicro, String bidType)
+    BaseAdsResponse<AudienceSummary> getAudienceSummary(String accountId, List<TargetingParamRequest> targetingParamRequests)
             throws TwitterException;
 
     BaseAdsListResponseIterable<IabCategory> fetchIabCategories(String q) throws TwitterException;
