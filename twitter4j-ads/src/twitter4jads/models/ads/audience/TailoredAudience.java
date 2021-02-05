@@ -26,7 +26,7 @@ public class TailoredAudience extends TwitterEntity {
     public static final String DELETED = "deleted";
     public static final String PARTNER_SOURCE = "partner_source";
     public static final String PERMISSION_LEVEL = "permission_level";
-    public static final String IS_OWNER = "is_owner";
+    public static final String OWNER_ACCOUNT_ID = "owner_account_id";
 
     @SerializedName(CREATED_AT)
     private Date createdAt;
@@ -64,8 +64,8 @@ public class TailoredAudience extends TwitterEntity {
     @SerializedName(PERMISSION_LEVEL)
     private TailoredAudiencePermissionLevel permissionLevel;
 
-    @SerializedName(IS_OWNER)
-    private Boolean isOwner;
+    @SerializedName(OWNER_ACCOUNT_ID)
+    private String ownerAccountId;
 
     public TailoredAudiencePermissionLevel getPermissionLevel() {
         return permissionLevel;
@@ -75,12 +75,12 @@ public class TailoredAudience extends TwitterEntity {
         this.permissionLevel = permissionLevel;
     }
 
-    public Boolean getOwner() {
-        return isOwner;
+    public String getOwnerAccountId() {
+        return ownerAccountId;
     }
 
-    public void setOwner(Boolean owner) {
-        isOwner = owner;
+    public void setOwnerAccountId(String ownerAccountId) {
+        this.ownerAccountId = ownerAccountId;
     }
 
     public void setDeleted(Boolean deleted) {
