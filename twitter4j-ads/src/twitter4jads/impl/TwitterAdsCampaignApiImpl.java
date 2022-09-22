@@ -134,18 +134,16 @@ public class TwitterAdsCampaignApiImpl implements TwitterAdsCampaignApi {
         TwitterAdUtil.ensureNotNull(campaign.getFundingInstrumentId(), "Funding Instrument ID");
         final String fundingInstrumentId = campaign.getFundingInstrumentId();
 
-        TwitterAdUtil.ensureNotNull(campaign.getDailyBudgetInMicro(), "Daily Budget Amount");
-        final Long dailyBudgetAmountLocalMicro = campaign.getDailyBudgetInMicro();
-
         final List<HttpParameter> params = new ArrayList<>();
-        final Long totalBudgetAmountLocalMicro = campaign.getTotalBudgetInMicro();
-        if (totalBudgetAmountLocalMicro != null) {
-            params.add(new HttpParameter(PARAM_TOTAL_BUDGET_AMOUNT_LOCAL_MICRO, totalBudgetAmountLocalMicro));
+        if (campaign.getTotalBudgetInMicro() != null) {
+            params.add(new HttpParameter(PARAM_TOTAL_BUDGET_AMOUNT_LOCAL_MICRO, campaign.getTotalBudgetInMicro()));
         }
 
         params.add(new HttpParameter(PARAM_NAME, name));
         params.add(new HttpParameter(PARAM_FUNDING_INSTRUMENT_ID, fundingInstrumentId));
-        params.add(new HttpParameter(PARAM_DAILY_BUDGET_AMOUNT_LOCAL_MICRO, dailyBudgetAmountLocalMicro));
+        if (campaign.getDailyBudgetInMicro() != null) {
+            params.add(new HttpParameter(PARAM_DAILY_BUDGET_AMOUNT_LOCAL_MICRO, campaign.getDailyBudgetInMicro()));
+        }
 
         if (campaign.getEntityStatus() != null) {
             params.add(new HttpParameter(PARAM_ENTITY_STATUS, campaign.getEntityStatus()));
