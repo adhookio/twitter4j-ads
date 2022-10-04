@@ -29,6 +29,7 @@ import twitter4jads.models.ads.audience.CustomAudienceUserDetails;
 import twitter4jads.util.TwitterAdUtil;
 
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -37,17 +38,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static twitter4jads.TwitterAdsConstants.CUSTOM_AUDIENCE_UPDATE_BATCH_SIZE;
-import static twitter4jads.TwitterAdsConstants.PARAM_CURSOR;
-import static twitter4jads.TwitterAdsConstants.PARAM_Q;
-import static twitter4jads.TwitterAdsConstants.PATH_CUSTOM_AUDIENCE;
-import static twitter4jads.TwitterAdsConstants.PATH_CUSTOM_AUDIENCES;
-import static twitter4jads.TwitterAdsConstants.PATH_CUSTOM_AUDIENCE_MATCHING_RULES;
-import static twitter4jads.TwitterAdsConstants.PATH_CUSTOM_AUDIENCE_PERMISSIONS;
-import static twitter4jads.TwitterAdsConstants.PREFIX_ACCOUNTS_URI_5;
-import static twitter4jads.TwitterAdsConstants.PREFIX_BATCH_ACCOUNTS_V5;
-import static twitter4jads.TwitterAdsConstants.SLASH;
-import static twitter4jads.TwitterAdsConstants.USERS;
+import static twitter4jads.TwitterAdsConstants.*;
 import static twitter4jads.internal.http.HttpResponseCode.BAD_REQUEST;
 import static twitter4jads.internal.http.HttpResponseCode.NOT_FOUND;
 import static twitter4jads.internal.http.HttpResponseCode.TOO_MANY_REQUESTS;
@@ -253,34 +244,50 @@ public class TwitterAdsAudienceApiImpl implements TwitterAdsAudienceApi {
             @Override
             public List<CustomAudienceOperation> next() {
                 List<CustomAudienceOperation> toReturn = Lists.newArrayList();
-                int totalSize = 0;
-                while (totalSize < CUSTOM_AUDIENCE_UPDATE_BATCH_SIZE && !operationPriorityQueue.isEmpty()) {
-                    int peekSize = operationPriorityQueue.peek().getUsers().size();
-                    if (totalSize + peekSize < CUSTOM_AUDIENCE_UPDATE_BATCH_SIZE) {
-                        totalSize += peekSize;
-                        toReturn.add(operationPriorityQueue.poll());
-                    } else {
-                        int diff = CUSTOM_AUDIENCE_UPDATE_BATCH_SIZE - totalSize;
-                        totalSize = CUSTOM_AUDIENCE_UPDATE_BATCH_SIZE;
+                long totalBytes = 0;
+                while (totalBytes < MAX_CUSTOM_AUDIENCE_PAYLOAD_BYTES && !operationPriorityQueue.isEmpty()) {
+                    totalBytes += CUSTOM_AUDIENCE_HEADER_BYTES;
+                    CustomAudienceOperation topOperation = operationPriorityQueue.poll();
+                    CustomAudienceOperation fractionalTopOperation = new CustomAudienceOperation();
 
-                        CustomAudienceOperation topOperation = operationPriorityQueue.poll();
-                        CustomAudienceOperation fractionalTopOperation = new CustomAudienceOperation();
+                    fractionalTopOperation.setOperationType(topOperation.getOperationType());
+                    fractionalTopOperation.setEffectiveFrom(topOperation.getEffectiveFrom());
+                    fractionalTopOperation.setExpireAt(topOperation.getExpireAt());
 
-                        fractionalTopOperation.setOperationType(topOperation.getOperationType());
-                        fractionalTopOperation.setEffectiveFrom(topOperation.getEffectiveFrom());
-                        fractionalTopOperation.setExpireAt(topOperation.getExpireAt());
+                    Set<CustomAudienceUserDetails> fractionalTopOperationUsers = Sets.newHashSet();
+                    Iterator<CustomAudienceUserDetails> topOperationUsersIterator = topOperation.getUsers().iterator();
 
-                        Set<CustomAudienceUserDetails> fractionalTopOperationUsers = Sets.newHashSet();
-                        Iterator<CustomAudienceUserDetails> topOperationUsersIterator = topOperation.getUsers().iterator();
-                        while (diff > 0 && topOperationUsersIterator.hasNext()) {
-                            fractionalTopOperationUsers.add(topOperationUsersIterator.next());
-                            diff--;
+                    while (topOperationUsersIterator.hasNext()) {
+                        CustomAudienceUserDetails user = topOperationUsersIterator.next();
+                        if (user.getEmails() != null) {
+                            totalBytes += (user.getEmails().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_EMAIL_BODY_TEXT));
                         }
-                        topOperation.getUsers().removeAll(fractionalTopOperationUsers);
-                        fractionalTopOperation.setUsers(fractionalTopOperationUsers);
+                        if (user.getPhoneNumbers() != null) {
+                            totalBytes += (user.getPhoneNumbers().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_PHONE_BODY_TEXT));
+                        }
+                        if (user.getDeviceIds() != null) {
+                            totalBytes += (user.getDeviceIds().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_DEVICE_BODY_TEXT));
+                        }
+                        if (user.getTwitterHandles() != null) {
+                            totalBytes += (user.getTwitterHandles().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_HANDLE_BODY_TEXT));
+                        }
+                        if (user.getTwitterIds() != null) {
+                            totalBytes += (user.getTwitterIds().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_TWITTER_ID_BODY_TEXT));
+                        }
+                        if (totalBytes >= MAX_CUSTOM_AUDIENCE_PAYLOAD_BYTES) {
+                            //does not fit in current batch
+                            break;
+                        }
+                        fractionalTopOperationUsers.add(user);
+                    }
+                    topOperation.getUsers().removeAll(fractionalTopOperationUsers);
+                    fractionalTopOperation.setUsers(fractionalTopOperationUsers);
+                    toReturn.add(fractionalTopOperation);
 
+                    if (!topOperation.getUsers().isEmpty()) {
                         operationPriorityQueue.offer(topOperation);
-                        toReturn.add(fractionalTopOperation);
+                    }
+                    if (toReturn.size() == MAX_OPERATIONS_CUSTOM_AUDIENCE) {
                         break;
                     }
                 }
