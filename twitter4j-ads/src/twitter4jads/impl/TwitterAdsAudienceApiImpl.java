@@ -227,6 +227,26 @@ public class TwitterAdsAudienceApiImpl implements TwitterAdsAudienceApi {
 
     // ----------------------------------------------------------------------- PRIVATE METHODS -----------------------------------------------------
 
+    private int getSizeOfUserInBytes(final CustomAudienceUserDetails user) {
+        int totalBytes = 0;
+        if (user.getEmails() != null) {
+            totalBytes += (user.getEmails().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_EMAIL_BODY_TEXT));
+        }
+        if (user.getPhoneNumbers() != null) {
+            totalBytes += (user.getPhoneNumbers().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_PHONE_BODY_TEXT));
+        }
+        if (user.getDeviceIds() != null) {
+            totalBytes += (user.getDeviceIds().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_DEVICE_BODY_TEXT));
+        }
+        if (user.getTwitterHandles() != null) {
+            totalBytes += (user.getTwitterHandles().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_HANDLE_BODY_TEXT));
+        }
+        if (user.getTwitterIds() != null) {
+            totalBytes += (user.getTwitterIds().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_TWITTER_ID_BODY_TEXT));
+        }
+        return totalBytes;
+    }
+
     private Iterator<List<CustomAudienceOperation>> generateBatchSequence(List<CustomAudienceOperation> operations) {
         PriorityQueue<CustomAudienceOperation> operationPriorityQueue =
                 new PriorityQueue<>(Comparator.<CustomAudienceOperation>comparingInt(operation -> operation.getUsers().size()).reversed());
@@ -243,37 +263,23 @@ public class TwitterAdsAudienceApiImpl implements TwitterAdsAudienceApi {
 
             @Override
             public List<CustomAudienceOperation> next() {
-                List<CustomAudienceOperation> toReturn = Lists.newArrayList();
+                final List<CustomAudienceOperation> toReturn = Lists.newArrayList();
                 long totalBytes = 0;
                 while (totalBytes < MAX_CUSTOM_AUDIENCE_PAYLOAD_BYTES && !operationPriorityQueue.isEmpty()) {
                     totalBytes += CUSTOM_AUDIENCE_HEADER_BYTES;
-                    CustomAudienceOperation topOperation = operationPriorityQueue.poll();
-                    CustomAudienceOperation fractionalTopOperation = new CustomAudienceOperation();
+                    final CustomAudienceOperation topOperation = operationPriorityQueue.poll();
+                    final CustomAudienceOperation fractionalTopOperation = new CustomAudienceOperation();
 
                     fractionalTopOperation.setOperationType(topOperation.getOperationType());
                     fractionalTopOperation.setEffectiveFrom(topOperation.getEffectiveFrom());
                     fractionalTopOperation.setExpireAt(topOperation.getExpireAt());
 
-                    Set<CustomAudienceUserDetails> fractionalTopOperationUsers = Sets.newHashSet();
-                    Iterator<CustomAudienceUserDetails> topOperationUsersIterator = topOperation.getUsers().iterator();
+                    final Set<CustomAudienceUserDetails> fractionalTopOperationUsers = Sets.newHashSet();
+                    final Iterator<CustomAudienceUserDetails> topOperationUsersIterator = topOperation.getUsers().iterator();
 
                     while (topOperationUsersIterator.hasNext()) {
-                        CustomAudienceUserDetails user = topOperationUsersIterator.next();
-                        if (user.getEmails() != null) {
-                            totalBytes += (user.getEmails().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_EMAIL_BODY_TEXT));
-                        }
-                        if (user.getPhoneNumbers() != null) {
-                            totalBytes += (user.getPhoneNumbers().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_PHONE_BODY_TEXT));
-                        }
-                        if (user.getDeviceIds() != null) {
-                            totalBytes += (user.getDeviceIds().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_DEVICE_BODY_TEXT));
-                        }
-                        if (user.getTwitterHandles() != null) {
-                            totalBytes += (user.getTwitterHandles().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_HANDLE_BODY_TEXT));
-                        }
-                        if (user.getTwitterIds() != null) {
-                            totalBytes += (user.getTwitterIds().size() * (CHARS_IN_SHA256 + CUSTOM_AUDIENCE_TWITTER_ID_BODY_TEXT));
-                        }
+                        final CustomAudienceUserDetails user = topOperationUsersIterator.next();
+                        totalBytes += getSizeOfUserInBytes(user);
                         if (totalBytes >= MAX_CUSTOM_AUDIENCE_PAYLOAD_BYTES) {
                             //does not fit in current batch
                             break;
