@@ -19,8 +19,8 @@ class NewAdsAudienceApiParams {
     @SerializedName("effective_at")
     private String effectiveAt;     //in ISO 8601
 
-    @SerializedName("expire_at")
-    private String expireAt;        //in ISO 8601
+    @SerializedName("expires_at")
+    private String expiresAt;        //in ISO 8601
 
     public Set<CustomAudienceUserDetails> getCustomAudienceUserDetails() {
         return customAudienceUserDetails;
@@ -39,10 +39,10 @@ class NewAdsAudienceApiParams {
     }
 
     public String getExpireAt() {
-        return expireAt;
+        return expiresAt;
     }
 
     public void setExpireAt(String expireAt) {
-        this.expireAt = expireAt;
+        this.expiresAt = expireAt;
     }
 }
