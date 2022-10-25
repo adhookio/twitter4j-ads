@@ -25,20 +25,19 @@ public class AudienceApiResponse {
 
     @SerializedName("operation_errors")
     List<List<ErrorResponse>> operationErrors;
-    @JsonAdapter(RequestListAdapter.class)
     @SerializedName("request")
-    private List<RequestParameters> request;
+    private RequestParameters request;
     @SerializedName("data")
     private NewAudienceApiResponseData data;
     @SerializedName("errors")
     private List<ErrorResponse> errors;
     private RateLimitStatus rateLimitStatus;
 
-    public List<RequestParameters> getRequest() {
+    public RequestParameters getRequest() {
         return request;
     }
 
-    public void setRequest(List<RequestParameters> request) {
+    public void setRequest(RequestParameters request) {
         this.request = request;
     }
 
@@ -96,23 +95,6 @@ public class AudienceApiResponse {
 
         public void setTotalCount(Long totalCount) {
             this.totalCount = totalCount;
-        }
-    }
-
-    /**
-     * on success request is returned as object and on failure as list
-     */
-    public static class RequestListAdapter implements JsonDeserializer<List<RequestParameters>> {
-
-        @Override
-        public List<RequestParameters> deserialize(JsonElement element, Type type, JsonDeserializationContext context) {
-            if (!element.isJsonArray()) {
-                JsonArray array = new JsonArray();
-                array.add(element);
-                element = array;
-            }
-
-            return new Gson().fromJson(element, type);
         }
     }
 }
